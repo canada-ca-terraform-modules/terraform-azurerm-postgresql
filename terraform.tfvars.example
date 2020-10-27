@@ -1,0 +1,12 @@
+administrator_login          = ""
+administrator_login_password = ""
+database_names               = []
+location                     = ""
+name                         = ""
+pgsql_version                = ""
+resource_group               = ""
+sku_name                     = ""
+storagesize_mb               = ""
+subnet_id                    = ""
+subscription_id              = ""
+tenant_id                    = ""
