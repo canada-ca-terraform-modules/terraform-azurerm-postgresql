@@ -14,9 +14,9 @@ resource "azurerm_postgresql_server" "pgsql" {
   geo_redundant_backup_enabled = false
   auto_grow_enabled            = true
 
-  public_network_access_enabled    = false
-  ssl_enforcement_enabled          = true
-  ssl_minimal_tls_version_enforced = "TLS1_2"
+  public_network_access_enabled    = var.public_network_access_enabled
+  ssl_enforcement_enabled          = var.ssl_enforcement_enabled
+  ssl_minimal_tls_version_enforced = var.ssl_minimal_tls_version_enforced
 }
 
 resource "azurerm_postgresql_database" "pgsql" {
@@ -32,28 +32,28 @@ resource "azurerm_postgresql_configuration" "log_checkpoints" {
   name                = "log_checkpoints"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
+  value               = "off"
 }
 
 resource "azurerm_postgresql_configuration" "log_connections" {
   name                = "log_connections"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
+  value               = "off"
 }
 
 resource "azurerm_postgresql_configuration" "log_disconnections" {
   name                = "log_disconnections"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
+  value               = "off"
 }
 
 resource "azurerm_postgresql_configuration" "log_duration" {
   name                = "log_duration"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
+  value               = "off"
 }
 
 resource "azurerm_postgresql_configuration" "connection_throttling" {
@@ -70,9 +70,37 @@ resource "azurerm_postgresql_configuration" "log_retention_days" {
   value               = "7"
 }
 
-resource "azurerm_postgresql_virtual_network_rule" "pgsql" {
-  name                = azurerm_postgresql_server.pgsql.name
+resource "azurerm_postgresql_configuration" "min_wal_size" {
+  name                = "min_wal_size"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  subnet_id           = var.subnet_id
+  value               = "512"
 }
+
+resource "azurerm_postgresql_configuration" "max_wal_size" {
+  name                = "max_wal_size"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "1024"
+}
+
+resource "azurerm_postgresql_configuration" "temp_buffers" {
+  name                = "temp_buffers"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "16384"
+}
+
+resource "azurerm_postgresql_configuration" "work_mem" {
+  name                = "work_mem"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "2048000"
+}
+
+// resource "azurerm_postgresql_virtual_network_rule" "pgsql" {
+//   name                = azurerm_postgresql_server.pgsql.name
+//   resource_group_name = var.resource_group
+//   server_name         = azurerm_postgresql_server.pgsql.name
+//   subnet_id           = var.subnet_id
+// }

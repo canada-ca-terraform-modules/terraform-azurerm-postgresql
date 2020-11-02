@@ -25,6 +25,11 @@ variable "pgsql_version" {
   default     = "9.6"
 }
 
+variable "public_network_access_enabled" {
+  description = "Whether the public network access is enabled"
+  default     = false
+}
+
 variable "resource_group" {
   description = "The name of the resource group in which resources will be created"
 }
@@ -34,19 +39,21 @@ variable "sku_name" {
   default     = "GP_Gen5_4"
 }
 
+variable "ssl_enforcement_enabled" {
+  description = "Whether the SSL enforced is enabled"
+  default     = true
+}
+
+variable "ssl_minimal_tls_version_enforced" {
+  description = "The SSL minimal TLS enforced version"
+  default     = "TLS1_2"
+}
+
 variable "storagesize_mb" {
   description = "The storage size that the PostgreSQL server will use"
   default     = 640000
 }
 
-variable "subnet_id" {
-  description = "Subnet ID"
-}
-
-variable "subscription_id" {
-  description = "The Subscription ID"
-}
-
-variable "tenant_id" {
-  description = "The Tenant ID"
-}
+// variable "subnet_id" {
+//   description = "Subnet ID"
+// }

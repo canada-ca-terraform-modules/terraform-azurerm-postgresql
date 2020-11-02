@@ -31,16 +31,13 @@ resource_group               = ""
 sku_name                     = ""
 storagesize_mb               = ""
 subnet_id                    = ""
-subscription_id              = ""
-tenant_id                    = ""
 ```
 
 ## Variables Values
 
-| Name                       | Type   | Required | Value                                                                                  |
-|----------------------------|--------|----------|----------------------------------------------------------------------------------------|
-| subscription_id            | string | yes      | The azure subscription id to use for backing up cluster virtual machines/disks         |
-| tenant_id                  | string | yes      | The azure tenant id to use for backing up cluster virtual machines/disks               |
+| Name                 | Type   | Required | Value                                                                                  |
+|----------------------|--------|----------|----------------------------------------------------------------------------------------|
+| subnet_id            | string | yes      | The azure subscription id to use for backing up cluster virtual machines/disks         |
 
 ## History
 
