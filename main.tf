@@ -109,7 +109,7 @@ resource "azurerm_postgresql_configuration" "synchronous_commit" {
   name                = "synchronous_commit"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "off"
+  value               = "on"
 }
 
 resource "azurerm_postgresql_configuration" "temp_buffers" {
