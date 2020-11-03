@@ -28,6 +28,20 @@ resource "azurerm_postgresql_database" "pgsql" {
   collation           = "English_United States.1252"
 }
 
+resource "azurerm_postgresql_configuration" "checkpoint_warning" {
+  name                = "checkpoint_warning"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "0"
+}
+
+resource "azurerm_postgresql_configuration" "connection_throttling" {
+  name                = "connection_throttling"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "on"
+}
+
 resource "azurerm_postgresql_configuration" "log_checkpoints" {
   name                = "log_checkpoints"
   resource_group_name = var.resource_group
@@ -56,13 +70,6 @@ resource "azurerm_postgresql_configuration" "log_duration" {
   value               = "off"
 }
 
-resource "azurerm_postgresql_configuration" "connection_throttling" {
-  name                = "connection_throttling"
-  resource_group_name = var.resource_group
-  server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
-}
-
 resource "azurerm_postgresql_configuration" "log_retention_days" {
   name                = "log_retention_days"
   resource_group_name = var.resource_group
@@ -74,7 +81,7 @@ resource "azurerm_postgresql_configuration" "min_wal_size" {
   name                = "min_wal_size"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "512"
+  value               = "128"
 }
 
 resource "azurerm_postgresql_configuration" "max_wal_size" {
@@ -84,6 +91,27 @@ resource "azurerm_postgresql_configuration" "max_wal_size" {
   value               = "1024"
 }
 
+resource "azurerm_postgresql_configuration" "maintenance_work_mem" {
+  name                = "maintenance_work_mem"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "1024000"
+}
+
+resource "azurerm_postgresql_configuration" "pg_stat_statements_track" {
+  name                = "pg_stat_statements.track"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "NONE"
+}
+
+resource "azurerm_postgresql_configuration" "synchronous_commit" {
+  name                = "synchronous_commit"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "off"
+}
+
 resource "azurerm_postgresql_configuration" "temp_buffers" {
   name                = "temp_buffers"
   resource_group_name = var.resource_group
@@ -91,11 +119,32 @@ resource "azurerm_postgresql_configuration" "temp_buffers" {
   value               = "16384"
 }
 
+resource "azurerm_postgresql_configuration" "wal_buffers" {
+  name                = "wal_buffers"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "8192"
+}
+
+resource "azurerm_postgresql_configuration" "wal_writer_delay" {
+  name                = "wal_writer_delay"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "10000"
+}
+
+resource "azurerm_postgresql_configuration" "wal_writer_flush_after" {
+  name                = "wal_writer_flush_after"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "128"
+}
+
 resource "azurerm_postgresql_configuration" "work_mem" {
   name                = "work_mem"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "2048000"
+  value               = "8192"
 }
 
 // resource "azurerm_postgresql_virtual_network_rule" "pgsql" {
