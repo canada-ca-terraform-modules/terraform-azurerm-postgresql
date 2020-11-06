@@ -96,6 +96,13 @@ resource "azurerm_postgresql_configuration" "log_error_verbosity" {
   value               = "default"
 }
 
+resource "azurerm_postgresql_configuration" "log_line_prefix" {
+  name                = "log_line_prefix"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "%t-%c-"
+}
+
 resource "azurerm_postgresql_configuration" "log_lock_waits" {
   name                = "log_lock_waits"
   resource_group_name = var.resource_group
