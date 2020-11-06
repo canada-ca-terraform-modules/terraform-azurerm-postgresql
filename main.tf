@@ -37,70 +37,70 @@ resource "azurerm_postgresql_configuration" "client_min_messages" {
   name                = "client_min_messages"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "LOG"
+  value               = "log"
 }
 
 resource "azurerm_postgresql_configuration" "debug_print_parse" {
   name                = "debug_print_parse"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "OFF"
+  value               = "off"
 }
 
 resource "azurerm_postgresql_configuration" "debug_print_plan" {
   name                = "debug_print_plan"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "OFF"
+  value               = "off"
 }
 
 resource "azurerm_postgresql_configuration" "debug_print_rewritten" {
   name                = "debug_print_rewritten"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "OFF"
+  value               = "off"
 }
 
 resource "azurerm_postgresql_configuration" "log_checkpoints" {
   name                = "log_checkpoints"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "OFF"
+  value               = "off"
 }
 
 resource "azurerm_postgresql_configuration" "log_connections" {
   name                = "log_connections"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "ON"
+  value               = "on"
 }
 
 resource "azurerm_postgresql_configuration" "log_disconnections" {
   name                = "log_disconnections"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "OFF"
+  value               = "off"
 }
 
 resource "azurerm_postgresql_configuration" "log_duration" {
   name                = "log_duration"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "ON"
+  value               = "on"
 }
 
 resource "azurerm_postgresql_configuration" "log_error_verbosity" {
   name                = "log_error_verbosity"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "VERBOSE"
+  value               = "verbose"
 }
 
 resource "azurerm_postgresql_configuration" "log_lock_waits" {
   name                = "log_lock_waits"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "OFF"
+  value               = "off"
 }
 
 resource "azurerm_postgresql_configuration" "log_min_duration_statement" {
@@ -114,14 +114,14 @@ resource "azurerm_postgresql_configuration" "log_min_error_statement" {
   name                = "log_min_error_statement"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "ERROR"
+  value               = "error"
 }
 
 resource "azurerm_postgresql_configuration" "log_min_messages" {
   name                = "log_min_messages"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "WARNING"
+  value               = "warning"
 }
 
 resource "azurerm_postgresql_configuration" "log_retention_days" {
@@ -135,7 +135,7 @@ resource "azurerm_postgresql_configuration" "log_statement" {
   name                = "log_statement"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "NONE"
+  value               = "none"
 }
 
 // Configure Performance
@@ -145,7 +145,7 @@ resource "azurerm_postgresql_configuration" "connection_throttling" {
   name                = "connection_throttling"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "ON"
+  value               = "on"
 }
 
 resource "azurerm_postgresql_configuration" "maintenance_work_mem" {
@@ -173,14 +173,14 @@ resource "azurerm_postgresql_configuration" "pg_stat_statements_track" {
   name                = "pg_stat_statements.track"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "NONE"
+  value               = "none"
 }
 
 resource "azurerm_postgresql_configuration" "synchronous_commit" {
   name                = "synchronous_commit"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "ON"
+  value               = "on"
 }
 
 resource "azurerm_postgresql_configuration" "temp_buffers" {
@@ -220,6 +220,15 @@ resource "azurerm_postgresql_configuration" "work_mem" {
 
 // Configure Networking
 //
+
+resource "azurerm_postgresql_firewall_rule" "pgsql" {
+  count               = length(var.firewall_rules)
+  name                = azurerm_postgresql_server.pgsql.name
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  start_ip_address    = var.firewall_rules[count.index]
+  end_ip_address      = var.firewall_rules[count.index]
+}
 
 resource "azurerm_postgresql_virtual_network_rule" "pgsql" {
   name                = azurerm_postgresql_server.pgsql.name

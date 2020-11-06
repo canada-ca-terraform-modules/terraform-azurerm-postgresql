@@ -11,6 +11,11 @@ variable "database_names" {
   description = "List of database names to be used with PostgreSQL"
 }
 
+variable "firewall_rules" {
+  type        = list(string)
+  description = "List of firewall rules to be used with PostgreSQL"
+}
+
 variable "location" {
   description = "The Azure region where the resources will be created"
   default     = "canadacentral"
