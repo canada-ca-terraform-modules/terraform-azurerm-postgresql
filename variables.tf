@@ -54,6 +54,6 @@ variable "storagesize_mb" {
   default     = 640000
 }
 
-// variable "subnet_id" {
-//   description = "Subnet ID"
-// }
+variable "subnet_id" {
+  description = "Subnet ID"
+}
