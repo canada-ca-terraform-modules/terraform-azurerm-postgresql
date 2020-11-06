@@ -79,7 +79,7 @@ resource "azurerm_postgresql_configuration" "log_disconnections" {
   name                = "log_disconnections"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "off"
+  value               = "on"
 }
 
 resource "azurerm_postgresql_configuration" "log_duration" {
@@ -93,7 +93,7 @@ resource "azurerm_postgresql_configuration" "log_error_verbosity" {
   name                = "log_error_verbosity"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "verbose"
+  value               = "default"
 }
 
 resource "azurerm_postgresql_configuration" "log_lock_waits" {
@@ -135,7 +135,17 @@ resource "azurerm_postgresql_configuration" "log_statement" {
   name                = "log_statement"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "none"
+  value               = "ddl"
+}
+
+// Configure Security
+//
+
+resource "azurerm_postgresql_configuration" "row_security" {
+  name                = "row_security"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "on"
 }
 
 // Configure Performance
