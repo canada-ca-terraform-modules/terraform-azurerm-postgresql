@@ -86,7 +86,7 @@ resource "azurerm_postgresql_configuration" "log_duration" {
   name                = "log_duration"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
+  value               = "off"
 }
 
 resource "azurerm_postgresql_configuration" "log_error_verbosity" {
@@ -157,6 +157,13 @@ resource "azurerm_postgresql_configuration" "row_security" {
 
 // Configure Performance
 //
+
+resource "azurerm_postgresql_configuration" "checkpoint_warning" {
+  name                = "checkpoint_warning"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "0"
+}
 
 resource "azurerm_postgresql_configuration" "connection_throttling" {
   name                = "connection_throttling"
