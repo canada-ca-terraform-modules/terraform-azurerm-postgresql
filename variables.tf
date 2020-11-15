@@ -11,6 +11,10 @@ variable "database_names" {
   description = "List of database names to be used with PostgreSQL"
 }
 
+variable "dependencies" {
+  type = "list"
+}
+
 variable "firewall_rules" {
   type        = list(string)
   description = "List of firewall rules to be used with PostgreSQL"
