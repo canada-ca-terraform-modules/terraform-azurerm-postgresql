@@ -18,6 +18,14 @@ The overall flow for this module is pretty simple:
 
 * None
 
+## Enabling Extensions
+
+Azure Database for PostgreSQL supports a subset of key extensions that are listed in the link below. This information is also available by running `SELECT * FROM pg_available_extensions;`.
+
+For instance, application teams that have functionality that needs encryption can enable pg_crypto by using the `CREATE EXTENSION` command.
+
+https://docs.microsoft.com/en-us/azure/postgresql/concepts-extensions
+
 ## Usage
 
 ```terraform
