@@ -212,11 +212,32 @@ resource "azurerm_postgresql_configuration" "max_wal_size" {
   value               = "1024"
 }
 
-resource "azurerm_postgresql_configuration" "pg_stat_statements_track" {
-  name                = "pg_stat_statements.track"
+resource "azurerm_postgresql_configuration" "pg_stat_statements_track_utility" {
+  name                = "pg_stat_statements.track_utility"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "none"
+  value               = "off"
+}
+
+resource "azurerm_postgresql_configuration" "pg_qs_track_utility" {
+  name                = "pg_qs.track_utility"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "on"
+}
+
+resource "azurerm_postgresql_configuration" "pg_qs_query_capture_mode" {
+  name                = "pg_qs.query_capture_mode"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "top"
+}
+
+resource "azurerm_postgresql_configuration" "pgms_wait_sampling_query_capture_mode" {
+  name                = "pgms_wait_sampling.query_capture_mode"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_postgresql_server.pgsql.name
+  value               = "all"
 }
 
 resource "azurerm_postgresql_configuration" "synchronous_commit" {
