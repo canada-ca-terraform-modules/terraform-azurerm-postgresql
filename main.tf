@@ -36,6 +36,13 @@ resource "azurerm_postgresql_server" "pgsql" {
   public_network_access_enabled    = var.public_network_access_enabled
   ssl_enforcement_enabled          = var.ssl_enforcement_enabled
   ssl_minimal_tls_version_enforced = var.ssl_minimal_tls_version_enforced
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
+
 }
 
 resource "azurerm_postgresql_database" "pgsql" {
@@ -56,112 +63,112 @@ resource "azurerm_postgresql_configuration" "client_min_messages" {
   name                = "client_min_messages"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "log"
+  value               = var.client_min_messages
 }
 
 resource "azurerm_postgresql_configuration" "debug_print_parse" {
   name                = "debug_print_parse"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "off"
+  value               = var.debug_print_parse
 }
 
 resource "azurerm_postgresql_configuration" "debug_print_plan" {
   name                = "debug_print_plan"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "off"
+  value               = var.debug_print_plan
 }
 
 resource "azurerm_postgresql_configuration" "debug_print_rewritten" {
   name                = "debug_print_rewritten"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "off"
+  value               = var.debug_print_rewritten
 }
 
 resource "azurerm_postgresql_configuration" "log_checkpoints" {
   name                = "log_checkpoints"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "off"
+  value               = var.log_checkpoints
 }
 
 resource "azurerm_postgresql_configuration" "log_connections" {
   name                = "log_connections"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
+  value               = var.log_connections
 }
 
 resource "azurerm_postgresql_configuration" "log_disconnections" {
   name                = "log_disconnections"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
+  value               = var.log_disconnections
 }
 
 resource "azurerm_postgresql_configuration" "log_duration" {
   name                = "log_duration"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "off"
+  value               = var.log_duration
 }
 
 resource "azurerm_postgresql_configuration" "log_error_verbosity" {
   name                = "log_error_verbosity"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "default"
+  value               = var.log_error_verbosity
 }
 
 resource "azurerm_postgresql_configuration" "log_line_prefix" {
   name                = "log_line_prefix"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "%t-%c-"
+  value               = var.log_line_prefix
 }
 
 resource "azurerm_postgresql_configuration" "log_lock_waits" {
   name                = "log_lock_waits"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "off"
+  value               = var.log_lock_waits
 }
 
 resource "azurerm_postgresql_configuration" "log_min_duration_statement" {
   name                = "log_min_duration_statement"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "10"
+  value               = var.log_min_duration_statement
 }
 
 resource "azurerm_postgresql_configuration" "log_min_error_statement" {
   name                = "log_min_error_statement"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "error"
+  value               = var.log_min_error_statement
 }
 
 resource "azurerm_postgresql_configuration" "log_min_messages" {
   name                = "log_min_messages"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "warning"
+  value               = var.log_min_messages
 }
 
 resource "azurerm_postgresql_configuration" "log_retention_days" {
   name                = "log_retention_days"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "7"
+  value               = var.log_retention_days
 }
 
 resource "azurerm_postgresql_configuration" "log_statement" {
   name                = "log_statement"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "ddl"
+  value               = var.log_statement
 }
 
 // Configure Security
@@ -171,7 +178,7 @@ resource "azurerm_postgresql_configuration" "row_security" {
   name                = "row_security"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
+  value               = var.row_security
 }
 
 // Configure Performance
@@ -181,105 +188,105 @@ resource "azurerm_postgresql_configuration" "checkpoint_warning" {
   name                = "checkpoint_warning"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "0"
+  value               = var.checkpoint_warning
 }
 
 resource "azurerm_postgresql_configuration" "connection_throttling" {
   name                = "connection_throttling"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
+  value               = var.connection_throttling
 }
 
 resource "azurerm_postgresql_configuration" "maintenance_work_mem" {
   name                = "maintenance_work_mem"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "1024000"
+  value               = var.maintenance_work_mem
 }
 
 resource "azurerm_postgresql_configuration" "min_wal_size" {
   name                = "min_wal_size"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "128"
+  value               = var.min_wal_size
 }
 
 resource "azurerm_postgresql_configuration" "max_wal_size" {
   name                = "max_wal_size"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "1024"
+  value               = var.max_wal_size
 }
 
 resource "azurerm_postgresql_configuration" "pg_stat_statements_track_utility" {
   name                = "pg_stat_statements.track_utility"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "off"
+  value               = var.pg_stat_statements_track_utility
 }
 
 resource "azurerm_postgresql_configuration" "pg_qs_track_utility" {
   name                = "pg_qs.track_utility"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
+  value               = var.pg_qs_track_utility
 }
 
 resource "azurerm_postgresql_configuration" "pg_qs_query_capture_mode" {
   name                = "pg_qs.query_capture_mode"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "top"
+  value               = var.pg_qs_query_capture_mode
 }
 
 resource "azurerm_postgresql_configuration" "pgms_wait_sampling_query_capture_mode" {
   name                = "pgms_wait_sampling.query_capture_mode"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "all"
+  value               = var.pgms_wait_sampling_query_capture_mode
 }
 
 resource "azurerm_postgresql_configuration" "synchronous_commit" {
   name                = "synchronous_commit"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "on"
+  value               = var.synchronous_commit
 }
 
 resource "azurerm_postgresql_configuration" "temp_buffers" {
   name                = "temp_buffers"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "16384"
+  value               = var.temp_buffers
 }
 
 resource "azurerm_postgresql_configuration" "wal_buffers" {
   name                = "wal_buffers"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "8192"
+  value               = var.wal_buffers
 }
 
 resource "azurerm_postgresql_configuration" "wal_writer_delay" {
   name                = "wal_writer_delay"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "10000"
+  value               = var.wal_writer_delay
 }
 
 resource "azurerm_postgresql_configuration" "wal_writer_flush_after" {
   name                = "wal_writer_flush_after"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "128"
+  value               = var.wal_writer_flush_after
 }
 
 resource "azurerm_postgresql_configuration" "work_mem" {
   name                = "work_mem"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  value               = "8192"
+  value               = var.work_mem
 }
 
 // Configure Networking
