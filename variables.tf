@@ -231,3 +231,8 @@ variable "work_mem" {
   description = "Sets the amount of memory to be used by internal sort operations and hash tables before writing to temporary disk files. Unit is kb"
   default     = "2048000"
 }
+
+variable "key_vault_id" {
+  description = "The Key Vault id for the Customer Managed Key"
+  default     = ""
+}

@@ -13,3 +13,4 @@ firewall_rules                   = []
 public_network_access_enabled    = true
 ssl_enforcement_enabled          = true
 ssl_minimal_tls_version_enforced = "TLS1_2"
+key_vault_id                     = ""

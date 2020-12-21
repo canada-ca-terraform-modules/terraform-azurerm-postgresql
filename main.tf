@@ -17,6 +17,14 @@ resource "null_resource" "dependency_getter" {
   }
 }
 
+resource "azurerm_key_vault_key" "pgsql" {
+  name         = "tfex-key"
+  key_vault_id = var.key_vault_id
+  key_type     = "RSA"
+  key_size     = 2048
+  key_opts     = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
+}
+
 resource "azurerm_postgresql_server" "pgsql" {
   name                = var.name
   location            = var.location
@@ -37,12 +45,21 @@ resource "azurerm_postgresql_server" "pgsql" {
   ssl_enforcement_enabled          = var.ssl_enforcement_enabled
   ssl_minimal_tls_version_enforced = var.ssl_minimal_tls_version_enforced
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   lifecycle {
     ignore_changes = [
       tags
     ]
   }
 
+}
+
+resource "azurerm_postgresql_server_key" "pgsql" {
+  server_id        = azurerm_postgresql_server.pgsql.id
+  key_vault_key_id = azurerm_key_vault_key.pgsql.id
 }
 
 resource "azurerm_postgresql_database" "pgsql" {
