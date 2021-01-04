@@ -71,6 +71,14 @@ resource "azurerm_postgresql_database" "pgsql" {
   collation           = "English_United States.1252"
 }
 
+resource "azurerm_postgresql_active_directory_administrator" "pgsql" {
+  server_name         = azurerm_postgresql_server.pgsql.name
+  resource_group_name = var.resource_group
+  login               = "sqladmin"
+  tenant_id           = var.active_directory_administrator_object_id
+  object_id           = var.active_directory_administrator_tenant_id
+}
+
 // Configure Server Logs
 //
 // https://docs.microsoft.com/en-us/azure/postgresql/howto-configure-server-logs-in-portal

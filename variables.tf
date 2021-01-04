@@ -236,3 +236,13 @@ variable "key_vault_id" {
   description = "The Key Vault id for the Customer Managed Key"
   default     = ""
 }
+
+variable "active_directory_administrator_object_id" {
+  description = "The Active Directory Administrator Object ID"
+  default     = ""
+}
+
+variable "active_directory_administrator_tenant_id" {
+  description = "The Active Directory Administrator Tenant ID"
+  default     = ""
+}
