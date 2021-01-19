@@ -18,7 +18,7 @@ resource "null_resource" "dependency_getter" {
 }
 
 resource "azurerm_key_vault_key" "pgsql" {
-  name         = "tfex-key"
+  name         = "${var.name}-tfex-key"
   key_vault_id = var.key_vault_id
   key_type     = "RSA"
   key_size     = 2048
