@@ -189,7 +189,7 @@ variable "pg_stat_statements_track_utility" {
 
 variable "pg_qs_track_utility" {
   description = "Selects whether utility commands are tracked by pg_qs"
-  default     = "ON"
+  default     = "on"
 }
 
 variable "pg_qs_query_capture_mode" {
