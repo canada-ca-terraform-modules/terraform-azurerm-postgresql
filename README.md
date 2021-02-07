@@ -70,5 +70,4 @@ ssl_minimal_tls_version_enforced = "TLS1_2"
 
 | Date     | Release    | Change                                     |
 |----------|------------|--------------------------------------------|
-| 20201027 | 20201027.1 | Initial relase of Terraform module         |
-| 20201219 | 20201219.1 | Add additional variables and documentation |
+| 20210207 | 20210207.1 | The v1.0.0 relase of Terraform module      |
