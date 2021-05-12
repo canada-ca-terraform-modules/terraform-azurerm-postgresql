@@ -48,7 +48,7 @@ resource "azurerm_postgresql_server" "pgsql" {
   tags = var.tags
 
   dynamic "threat_detection_policy" {
-    for_each = var.threat_enable == true ? toset([1]) : toset([])
+    for_each = var.keyvault_enable == true ? toset([1]) : toset([])
 
     content {
       disabled_alerts      = []

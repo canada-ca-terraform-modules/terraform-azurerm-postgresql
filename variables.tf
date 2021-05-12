@@ -118,8 +118,8 @@ variable "tags" {
   }
 }
 
-variable "threat_enable" {
-  description = "(Optional) Enable Threat Detection Policy."
+variable "keyvault_enable" {
+  description = "(Optional) Enable Key Vault for passwords."
   default     = false
 }
 
