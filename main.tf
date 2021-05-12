@@ -31,7 +31,7 @@ resource "azurerm_postgresql_server" "pgsql" {
   resource_group_name = var.resource_group
 
   administrator_login          = var.administrator_login
-  administrator_login_password = var.administrator_login_password
+  administrator_login_password = length(data.azurerm_key_vault_secret.sqlhstsvc) > 0 ? data.azurerm_key_vault_secret.sqlhstsvc[0].value : var.administrator_login_password
 
   sku_name   = var.sku_name
   version    = var.pgsql_version
@@ -79,11 +79,11 @@ resource "azurerm_postgresql_server_key" "pgsql" {
 
 resource "azurerm_postgresql_database" "pgsql" {
   count               = length(var.database_names)
-  name                = var.database_names[count.index]
+  name                = var.database_names[count.index].name
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
   charset             = "UTF8"
-  collation           = "English_United States.1252"
+  collation           = lookup(var.database_names[count.index], "collation", "English_United States.1252")
 }
 
 resource "azurerm_postgresql_active_directory_administrator" "pgsql" {

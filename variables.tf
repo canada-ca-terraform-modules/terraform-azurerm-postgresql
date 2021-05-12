@@ -19,7 +19,7 @@ variable "administrator_login_password" {
 }
 
 variable "database_names" {
-  type        = list(string)
+  type        = list(map(string))
   description = "(Required) The name of the PostgreSQL database(s)."
 }
 
