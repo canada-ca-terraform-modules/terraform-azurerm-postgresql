@@ -45,6 +45,21 @@ resource "azurerm_postgresql_server" "pgsql" {
   ssl_enforcement_enabled          = var.ssl_enforcement_enabled
   ssl_minimal_tls_version_enforced = var.ssl_minimal_tls_version_enforced
 
+  tags = var.tags
+
+  dynamic "threat_detection_policy" {
+    for_each = var.threat_enable == true ? toset([1]) : toset([])
+
+    content {
+      disabled_alerts      = []
+      email_account_admins = true
+      email_addresses      = var.emails
+      enabled              = true
+      retention_days       = var.retention_days
+      storage_endpoint     = data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint
+    }
+  }
+
   identity {
     type = "SystemAssigned"
   }

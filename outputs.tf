@@ -11,11 +11,11 @@ output "administrator_login" {
 }
 
 output "identity_tenant_id" {
-	value = azurerm_postgresql_server.pgsql.identity[0].tenant_id
+  value = azurerm_postgresql_server.pgsql.identity[0].tenant_id
 }
 
 output "identity_object_id" {
-	value = azurerm_postgresql_server.pgsql.identity[0].principal_id
+  value = azurerm_postgresql_server.pgsql.identity[0].principal_id
 }
 
 # Part of a hack for module-to-module dependencies.
