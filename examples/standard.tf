@@ -61,9 +61,9 @@ resource "azurerm_key_vault" "keyvault" {
 module "postgresql_example" {
   source = "git::https://github.com/canada-ca-terraform-modules/terraform-azurerm-postgresql-statcan.git?ref=master"
 
-  name           = "psqlservername"
+  name = "psqlservername"
   database_names = [
-    {name = "psqlservername", collation = "English_United States.1252"}  
+    { name = "psqlservername", collation = "English_United States.1252" }
   ]
 
   dependencies = []
