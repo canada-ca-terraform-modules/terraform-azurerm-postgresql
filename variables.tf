@@ -28,6 +28,17 @@ variable "dependencies" {
   description = "(Required) Dependency management of resources."
 }
 
+variable "diagnostics" {
+  description = "Diagnostic settings for those resources that support it."
+  type = object({
+    destination   = string
+    eventhub_name = string
+    logs          = list(string)
+    metrics       = list(string)
+  })
+  default = null
+}
+
 variable "emails" {
   type        = list(string)
   description = "(Required) List of email addresses that should recieve the security reports."
