@@ -3,7 +3,7 @@
 resource "azurerm_storage_account" "pgsql" {
   count = var.keyvault_enable ? 0 : 1
 
-  name                     = "${replace(var.name, "-", "")}pgsql"
+  name                     = substr("${replace(var.name, "-", "")}pgsql", 0, 24)
   location                 = var.location
   resource_group_name      = var.resource_group
   account_tier             = "Standard"

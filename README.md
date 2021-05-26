@@ -19,6 +19,16 @@ For instance, application teams that have functionality that needs encryption ca
 
 https://docs.microsoft.com/en-us/azure/postgresql/concepts-extensions
 
+## Notes on Collation
+
+The Azure Managed Database for Postgresql is currently using the Windows O.S. As such the collation names are different.
+
+```sh
+sudo -u postgres pg_dump -Fp —no-owner DBNAME | sed "/COLLATE/s/en_US.utf8/English_United States.1252/ig" | sed "/CREATE COLLATION/s/en_US.utf8/English_United States.1252/ig" | psql --host=aaa.postgres.database.azure.com --port=5432 --username=xxx@yyy --dbname=DBNAME
+```
+
+Reference: https://stackoverflow.com/questions/47791728/azure-postgresql-server-service-collation-create-error
+
 ## Usage
 
 Examples for this module along with various configurations can be found in the [examples/](examples/) folder.
