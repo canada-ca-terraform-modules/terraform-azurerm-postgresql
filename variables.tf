@@ -23,11 +23,6 @@ variable "database_names" {
   description = "(Required) The name of the PostgreSQL database(s)."
 }
 
-variable "dependencies" {
-  type        = list(string)
-  description = "(Required) Dependency management of resources."
-}
-
 variable "diagnostics" {
   description = "Diagnostic settings for those resources that support it."
   type = object({
@@ -48,6 +43,17 @@ variable "emails" {
 variable "firewall_rules" {
   type        = list(string)
   description = "(Required) Specifies the Start IP Address associated with this Firewall Rule."
+}
+
+variable "key_type" {
+  description = "Type of key to create in the Key Vault"
+  default     = "RSA"
+}
+
+variable "key_size" {
+  type        = number
+  description = "Size of key to create in Key Vault"
+  default     = 2048
 }
 
 variable "key_vault_id" {
@@ -113,8 +119,9 @@ variable "storagesize_mb" {
   default     = 640000
 }
 
-variable "subnet_id" {
-  description = "(Required) The ID of the subnet that the PostgreSQL server will be connected to."
+variable "subnet_ids" {
+  type        = list(string)
+  description = "(Required) The IDs of the subnet that the PostgreSQL server will be connected to"
 }
 
 variable "storageaccountinfo_resource_group_name" {
