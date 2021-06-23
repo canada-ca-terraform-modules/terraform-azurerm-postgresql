@@ -36,7 +36,7 @@ Examples for this module along with various configurations can be found in the [
 ## Variables
 
 | Name                                     | Type   | Default           | Required | Description                                                                                                                          |
-|------------------------------------------|--------|-------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------- | ------ | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | active_directory_administrator_object_id | string | `""`              | no       | The Active Directory Administrator Object ID.                                                                                        |
 | active_directory_administrator_tenant_id | string | `""`              | no       | The Active Directory Administrator Tenant ID.                                                                                        |
 | administrator_login                      | string | n/a               | yes      | The Administrator Login for the PostgreSQL Server.                                                                                   |
@@ -45,6 +45,8 @@ Examples for this module along with various configurations can be found in the [
 | dependencies                             | list   | n/a               | yes      | Dependency management of resources.                                                                                                  |
 | emails                                   | list   | n/a               | yes      | List of email addresses that should recieve the security reports.                                                                    |
 | firewall_rules                           | list   | n/a               | yes      | Specifies the Start IP Address associated with this Firewall Rule.                                                                   |
+| key_size                                 | number | `2048`            | no       | Size of key to create in Key Vault.                                                                                                  |
+| key_type                                 | string | `"RSA"`           | no       | Type of key to create in the Key Vault.                                                                                              |
 | key_vault_id                             | string | `""`              | no       | The Key Vault id for the Customer Managed Key.                                                                                       |
 | kv_name                                  | string | `""`              | no       | The Key Vault name.                                                                                                                  |
 | kv_rg                                    | string | `""`              | no       | The Key Vault resource group.                                                                                                        |
@@ -57,10 +59,10 @@ Examples for this module along with various configurations can be found in the [
 | ssl_enforcement_enabled                  | string | `"true"`          | no       | Specifies if SSL should be enforced on connections.                                                                                  |
 | ssl_minimal_tls_version_enforced         | string | `"TLS1_2"`        | no       | The mimimun TLS version to support on the sever.                                                                                     |
 | storagesize_mb                           | string | `"640000"`        | no       | Specifies the version of PostgreSQL to use.                                                                                          |
-| subnet_id                                | string | n/a               | yes      | The ID of the subnet that the PostgreSQL server will be connected to.                                                                |
+| subnet_ids                               | list   | n/a               | yes      | The IDs of the subnets that the PostgreSQL server will be connected to.                                                              |
 | storageaccountinfo_resource_group_name   | string | n/a               | yes      | The storageaccountinfo resource group name.                                                                                          |
 | tags                                     | map    | `"<map>"`         | n/a      | A mapping of tags to assign to the resource.                                                                                         |
-| keyvault_enable                            | string | `"false"`         | no       | Enable Threat Detection Policy.                                                                                                      |
+| keyvault_enable                          | string | `"false"`         | no       | Enable Threat Detection Policy.                                                                                                      |
 | client_min_messages                      | string | `"log"`           | no       | Sets the message levels that are sent to the client.                                                                                 |
 | debug_print_parse                        | string | `"off"`           | no       | Logs each query's parse tree.                                                                                                        |
 | debug_print_plan                         | string | `"off"`           | no       | Logs each query's execution plan.                                                                                                    |
@@ -96,8 +98,9 @@ Examples for this module along with various configurations can be found in the [
 
 ## History
 
-| Date     | Release    | Change                                                          |
-|----------|------------|-----------------------------------------------------------------|
-| 20210510 | 20210526.1 | The v1.0.2 release which adds custom SA threat detection policy |
-| 20210510 | 20210510.1 | The v1.0.1 release which adds optional support for ATP          |
-| 20210207 | 20210207.1 | The v1.0.0 release of Terraform module                          |
+| Date     | Release    | Change                                                                                                   |
+| -------- | ---------- | -------------------------------------------------------------------------------------------------------- |
+| 20210623 | 20210623.1 | The v1.1.0 release which add more configurable key-vault settings and easier changing to firewall/vnets. |
+| 20210510 | 20210526.1 | The v1.0.2 release which adds custom SA threat detection policy                                          |
+| 20210510 | 20210510.1 | The v1.0.1 release which adds optional support for ATP                                                   |
+| 20210207 | 20210207.1 | The v1.0.0 release of Terraform module                                                                   |
