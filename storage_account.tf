@@ -13,6 +13,7 @@ resource "azurerm_storage_account" "pgsql" {
   # enable_file_encryption = "True"
   access_tier               = "Hot"
   enable_https_traffic_only = true
+  tags                      = var.tags
 }
 
 resource "azurerm_storage_container" "pgsql" {

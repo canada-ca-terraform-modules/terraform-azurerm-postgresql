@@ -100,7 +100,8 @@ Examples for this module along with various configurations can be found in the [
 
 | Date     | Release    | Change                                                                                                   |
 | -------- | ---------- | -------------------------------------------------------------------------------------------------------- |
-| 20210623 | 20210623.1 | The v1.1.0 release which add more configurable key-vault settings and easier changing to firewall/vnets. |
+| 20210625 | 20210625.1 | The v1.1.1 release which passes tags to other resources and fixes subnet rule names                      |
+| 20210623 | 20210623.1 | The v1.1.0 release which add more configurable key-vault settings and easier changing to firewall/vnets  |
 | 20210510 | 20210526.1 | The v1.0.2 release which adds custom SA threat detection policy                                          |
 | 20210510 | 20210510.1 | The v1.0.1 release which adds optional support for ATP                                                   |
 | 20210207 | 20210207.1 | The v1.0.0 release of Terraform module                                                                   |
