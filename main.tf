@@ -4,6 +4,7 @@ resource "azurerm_key_vault_key" "pgsql" {
   key_type     = var.key_type
   key_size     = var.key_size
   key_opts     = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
+  tags         = var.tags
 }
 
 resource "azurerm_postgresql_server" "pgsql" {
@@ -321,7 +322,7 @@ resource "azurerm_postgresql_firewall_rule" "pgsql" {
 
 resource "azurerm_postgresql_virtual_network_rule" "pgsql" {
   for_each            = toset(var.subnet_ids)
-  name                = md5(each.key)
+  name                = "r-${md5(each.key)}"
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
   subnet_id           = each.key
