@@ -62,9 +62,12 @@ module "postgresql_example" {
   source = "git::https://github.com/canada-ca-terraform-modules/terraform-azurerm-postgresql-statcan.git?ref=master"
 
   name = "psqlservername"
-  database_names = [
-    { name = "psqlservername", collation = "English_United States.1252" }
-  ]
+  databases = {
+    psqlservername1 = { collation = "English_United States.1252" },
+    psqlservername2 = { chartset = "UTF8" },
+    psqlservername3 = { chartset = "UTF8", collation = "English_United States.1252" },
+    psqlservername4 = {}
+  }
 
   dependencies = []
 

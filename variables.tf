@@ -18,9 +18,9 @@ variable "administrator_login_password" {
   description = "(Required) The Password associated with the administrator_login for the PostgreSQL Server."
 }
 
-variable "database_names" {
-  type        = list(map(string))
-  description = "(Required) The name of the PostgreSQL database(s)."
+variable "databases" {
+  type        = map(map(string))
+  description = "(Required) The name, collation, and charset of the PostgreSQL database(s). (defaults: charset='UTF8', collation='English_United States.1252')"
 }
 
 variable "diagnostics" {
