@@ -81,7 +81,7 @@ module "postgresql_example" {
   location       = "canadacentral"
   environment    = "dev"
   resource_group = "psql-dev-rg"
-  subnet_id      = local.containerCCSubnetRef
+  subnet_ids     = local.containerCCSubnetRef
 
   active_directory_administrator_object_id = var.active_directory_administrator_object_id
   active_directory_administrator_tenant_id = var.active_directory_administrator_tenant_id
