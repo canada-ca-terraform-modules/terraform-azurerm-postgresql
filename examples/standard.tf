@@ -59,7 +59,7 @@ resource "azurerm_key_vault" "keyvault" {
 }
 
 module "postgresql_example" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-azurerm-postgresql-statcan.git?ref=master"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-azurerm-postgresql.git?ref=master"
 
   name = "psqlservername"
   databases = {
@@ -69,10 +69,10 @@ module "postgresql_example" {
     psqlservername4 = {}
   }
 
-  dependencies = []
-
   administrator_login          = "psqladmin"
   administrator_login_password = var.administrator_login_password
+
+  keyvault_enable = false
 
   sku_name       = "GP_Gen5_4"
   pgsql_version  = "11"
@@ -81,7 +81,7 @@ module "postgresql_example" {
   location       = "canadacentral"
   environment    = "dev"
   resource_group = "psql-dev-rg"
-  subnet_ids     = local.containerCCSubnetRef
+  subnet_ids     = [local.containerCCSubnetRef]
 
   active_directory_administrator_object_id = var.active_directory_administrator_object_id
   active_directory_administrator_tenant_id = var.active_directory_administrator_tenant_id
