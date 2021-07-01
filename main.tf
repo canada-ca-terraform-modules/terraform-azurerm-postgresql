@@ -57,12 +57,12 @@ resource "azurerm_postgresql_server_key" "pgsql" {
 }
 
 resource "azurerm_postgresql_database" "pgsql" {
-  count               = length(var.database_names)
-  name                = var.database_names[count.index].name
+  for_each            = var.databases
+  name                = each.key
   resource_group_name = var.resource_group
   server_name         = azurerm_postgresql_server.pgsql.name
-  charset             = "UTF8"
-  collation           = lookup(var.database_names[count.index], "collation", "English_United States.1252")
+  charset             = lookup(each.value, "charset", "UTF8")
+  collation           = lookup(each.value, "collation", "English_United States.1252")
 }
 
 resource "azurerm_postgresql_active_directory_administrator" "pgsql" {
