@@ -1,5 +1,6 @@
 plan
-.terraform/plugins
+.terraform
+*.lock.hcl
 *.tfstate
 *.tfstate.backup
 terraform.tfvars

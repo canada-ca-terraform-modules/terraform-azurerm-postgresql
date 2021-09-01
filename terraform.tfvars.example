@@ -1,19 +1,46 @@
-name                                     = var.managed_postgresql_name
-database_names                           = ["application"]
-dependencies                             = []
-administrator_login                      = "pgsqladmin"
-administrator_login_password             = var.managed_postgresql_password
-sku_name                                 = "GP_Gen5_4"
-pgsql_version                            = "11"
-storagesize_mb                           = 256000
-location                                 = "canadacentral"
-resource_group                           = "XX-XXXX-XXXX-XXX-XXX-RGP"
-subnet_id                                = var.managed_postgresql_subnet_id
-firewall_rules                           = []
-public_network_access_enabled            = true
-ssl_enforcement_enabled                  = true
-ssl_minimal_tls_version_enforced         = "TLS1_2"
-key_vault_id                             = ""
-kv_name                                  = "XXXXX"
-kv_rg                                    = "XX-XXXX-XXXX-XXX-XXX-RGP"
-storageaccountinfo_resource_group_name   = "XX-XXXX-XXXX-XXX-XXX-RGP"
+name = "pgsqlservername"
+databases = {
+  pgsqlservername1 = { collation = "utf8_unicode_ci" }
+}
+
+administrator_login          = "pgsqladmin"
+administrator_login_password = "pgsql1313"
+
+# active_directory_administrator_object_id = "XX-XXXX-XXXX-XXX-XXX"
+# active_directory_administrator_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
+
+kv_workflow_enable = false
+# kv_workflow_name             = "XXXXX"
+# kv_workflow_rg               = "XX-XXXX-XXXX-XXX-XXX"
+# kv_workflow_salogging_rg     = "XX-XXXX-XXXX-XXX-XXX"
+
+sku_name       = "GP_Gen5_4"
+pgsql_version  = "11"
+storagesize_mb = 256000
+
+location       = "canadacentral"
+resource_group = "XX-XXXX-XXXX-XXX-XXX"
+subnet_ids     = []
+
+firewall_rules = []
+
+vnet_enable = false
+vnet_name   = "pgsql-vnet"
+vnet_cidr   = "172.15.0.0/16"
+vnet_rg     = "XX-XXXX-XXXX-XXX-XXX"
+
+subnet_enable           = false
+subnet_name             = "pgsql-subnet"
+subnet_address_prefixes = ["172.15.8.0/22"]
+
+public_network_access_enabled    = true
+ssl_enforcement_enabled          = true
+ssl_minimal_tls_version_enforced = "TLS1_2"
+key_vault_id                     = ""
+
+diagnostics = {
+  destination   = ""
+  eventhub_name = ""
+  logs          = ["all"]
+  metrics       = ["all"]
+}

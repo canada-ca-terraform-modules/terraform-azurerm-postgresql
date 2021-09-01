@@ -1,3 +1,7 @@
+provider "azurerm" {
+  features {}
+}
+
 resource "azurerm_key_vault" "keyvault" {
   name                        = "keyvaultname"
   location                    = var.location
@@ -11,8 +15,8 @@ resource "azurerm_key_vault" "keyvault" {
   sku_name = "standard"
 
   access_policy {
-    tenant_id = module.psqlserver.identity_tenant_id
-    object_id = module.psqlserver.identity_object_id
+    tenant_id = module.postgresql_example.identity_tenant_id
+    object_id = module.postgresql_example.identity_object_id
 
     key_permissions = [
       "get",
@@ -59,7 +63,7 @@ resource "azurerm_key_vault" "keyvault" {
 }
 
 module "postgresql_example" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-azurerm-postgresql.git?ref=master"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-azurerm-postgresql.git?ref=v2.0.0"
 
   name = "psqlservername"
   databases = {
@@ -70,31 +74,50 @@ module "postgresql_example" {
   }
 
   administrator_login          = "psqladmin"
-  administrator_login_password = var.administrator_login_password
+  administrator_login_password = "psql1313"
 
-  keyvault_enable = false
+  # active_directory_administrator_object_id = "XX-XXXX-XXXX-XXX-XXX"
+  # active_directory_administrator_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
+
+  kv_workflow_enable = false
+  # kv_workflow_name             = "XXXXX"
+  # kv_workflow_rg               = "XX-XXXX-XXXX-XXX-XXX"
+  # kv_workflow_salogging_rg     = "XX-XXXX-XXXX-XXX-XXX"
 
   sku_name       = "GP_Gen5_4"
   pgsql_version  = "11"
   storagesize_mb = 512000
 
   location       = "canadacentral"
-  environment    = "dev"
   resource_group = "psql-dev-rg"
-  subnet_ids     = [local.containerCCSubnetRef]
+  subnet_ids     = []
 
-  active_directory_administrator_object_id = var.active_directory_administrator_object_id
-  active_directory_administrator_tenant_id = var.active_directory_administrator_tenant_id
+  firewall_rules = []
+
+  vnet_cidr   = "172.15.0.0/16"
+  vnet_enable = false
+  vnet_name   = "psql-vnet"
+  vnet_rg     = "XX-XXXX-XXXX-XXX-XXX"
+
+  subnet_enable           = false
+  subnet_name             = "psql-subnet"
+  subnet_address_prefixes = ["172.15.8.0/22"]
 
   public_network_access_enabled    = true
   ssl_enforcement_enabled          = true
   ssl_minimal_tls_version_enforced = "TLS1_2"
+  key_vault_id                     = azurerm_key_vault.keyvault.id
+
+  diagnostics = {
+    destination   = ""
+    eventhub_name = ""
+    logs          = ["all"]
+    metrics       = ["all"]
+  }
 
   emails = []
 
   tags = {
     "tier" = "k8s"
   }
-
-  key_vault_id = azurerm_key_vault.keyvault.id
 }

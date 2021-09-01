@@ -46,13 +46,13 @@ variable "firewall_rules" {
 }
 
 variable "key_type" {
-  description = "Type of key to create in the Key Vault"
+  description = "Type of key to create in the Key Vault."
   default     = "RSA"
 }
 
 variable "key_size" {
   type        = number
-  description = "Size of key to create in Key Vault"
+  description = "Size of key to create in Key Vault."
   default     = 2048
 }
 
@@ -61,13 +61,23 @@ variable "key_vault_id" {
   default     = ""
 }
 
-variable "kv_name" {
+variable "kv_workflow_enable" {
+  description = "(Optional) Enable Key Vault workflow for storage of passwords and pointer to logging storage account."
+  default     = false
+}
+
+variable "kv_workflow_name" {
   description = "(Optional) The Key Vault name."
   default     = ""
 }
 
-variable "kv_rg" {
+variable "kv_workflow_rg" {
   description = "(Optional) The Key Vault resource group."
+  default     = ""
+}
+
+variable "kv_workflow_salogging_rg" {
+  description = "(Optional) The Key Vault storage account for logging resource group."
   default     = ""
 }
 
@@ -124,11 +134,6 @@ variable "subnet_ids" {
   description = "(Required) The IDs of the subnet that the PostgreSQL server will be connected to"
 }
 
-variable "storageaccountinfo_resource_group_name" {
-  description = "(Optional) The storageaccountinfo resource group name."
-  default     = ""
-}
-
 variable "tags" {
   type = map(string)
   default = {
@@ -136,10 +141,43 @@ variable "tags" {
   }
 }
 
-variable "keyvault_enable" {
-  description = "(Optional) Enable Key Vault for passwords."
+variable "vnet_cidr" {
+  description = "Virtual Network CIDR"
+  type        = list(string)
+  default     = ["172.15.0.0/16"]
+}
+
+variable "vnet_enable" {
+  description = "(Optional) Enable Virtual Network logic."
   default     = false
 }
+
+variable "vnet_name" {
+  description = "(Optional) Name for your Virtual Network."
+  type        = string
+}
+
+variable "vnet_rg" {
+  description = "(Optional) The Virtual Network resource group."
+  default     = ""
+}
+
+variable "subnet_address_prefixes" {
+  description = "Virtual Network Address Prefixes"
+  type        = list(string)
+  default     = ["172.15.8.0/22"]
+}
+
+variable "subnet_enable" {
+  description = "(Optional) Enable Subnet logic."
+  default     = false
+}
+
+variable "subnet_name" {
+  description = "(Optional) Name for your Subnet."
+  type        = string
+}
+
 
 # Parameters
 
