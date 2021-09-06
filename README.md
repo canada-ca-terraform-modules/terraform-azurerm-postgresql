@@ -105,6 +105,7 @@ Examples for this module along with various configurations can be found in the [
 
 | Date     | Release    | Change                                                                                                  |
 | -------- | ---------- | ------------------------------------------------------------------------------------------------------- |
+| 20210905 | 20210905.1 | The v2.1.2 release adds ability to opt out of diagnostics                                               |
 | 20210902 | 20210902.1 | The v2.1.1 release adds an ip_rules variable                                                            |
 | 20210831 | 20210831.1 | The v2.1.0 release updates kv workflow, naming, and examples                                            |
 | 20210701 | 20210701.1 | The v2.0.0 release prevents destruction of databases when one or more are added/removed from the list   |
