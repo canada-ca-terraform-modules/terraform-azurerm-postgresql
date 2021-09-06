@@ -22,6 +22,7 @@ location       = "canadacentral"
 resource_group = "XX-XXXX-XXXX-XXX-XXX"
 subnet_ids     = []
 
+ip_rules       = []
 firewall_rules = []
 
 vnet_enable = false

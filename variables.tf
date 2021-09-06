@@ -40,6 +40,11 @@ variable "emails" {
   default     = []
 }
 
+variable "ip_rules" {
+  type        = list(string)
+  description = "(Required) List of public IP or IP ranges in CIDR Format."
+}
+
 variable "firewall_rules" {
   type        = list(string)
   description = "(Required) Specifies the Start IP Address associated with this Firewall Rule."

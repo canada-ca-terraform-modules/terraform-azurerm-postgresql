@@ -92,6 +92,7 @@ module "postgresql_example" {
   resource_group = "psql-dev-rg"
   subnet_ids     = []
 
+  ip_rules       = []
   firewall_rules = []
 
   vnet_cidr   = "172.15.0.0/16"

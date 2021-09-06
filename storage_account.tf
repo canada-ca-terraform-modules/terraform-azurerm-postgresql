@@ -16,7 +16,7 @@ resource "azurerm_storage_account" "pgsql" {
 
   network_rules {
     default_action             = "Deny"
-    ip_rules                   = []
+    ip_rules                   = var.ip_rules
     virtual_network_subnet_ids = [var.subnet_enable ? azurerm_subnet.pgsql[0].id : data.azurerm_subnet.pgsql[0].id]
     bypass                     = ["AzureServices"]
   }
