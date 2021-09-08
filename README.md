@@ -48,6 +48,10 @@ Examples for this module along with various configurations can be found in the [
 | key_size                                 | number           | `2048`            | no       | Size of key to create in Key Vault.                                                                                                  |
 | key_type                                 | string           | `"RSA"`           | no       | Type of key to create in the Key Vault.                                                                                              |
 | key_vault_id                             | string           | `""`              | no       | The Key Vault id for the Customer Managed Key.                                                                                       |
+| kv_db_enable                             | string           | `"false"`         | no       | Enable Key Vault to be used against the MySQL instance.                                                                              |
+| kv_db_name                               | string           | `""`              | no       | The Key Vault name to be used against the MySQL instance.                                                                            |
+| kv_db_rg                                 | string           | `""`              | no       | The Key Vault resource group to be used against the MySQL instance.                                                                  |
+| kv_db_tenant_id                          | string           | `""`              | yes      | The Tenant ID to be used for the Key Vault against the MySQL instance.                                                               |
 | kv_workflow_enable                       | string           | `"false"`         | no       | Enable Key Vault workflow for storage of passwords and pointer to logging storage account.                                           |
 | kv_workflow_name                         | string           | `""`              | no       | The Key Vault name.                                                                                                                  |
 | kv_workflow_rg                           | string           | `""`              | no       | The Key Vault resource group.                                                                                                        |
@@ -103,14 +107,15 @@ Examples for this module along with various configurations can be found in the [
 
 ## History
 
-| Date     | Release    | Change                                                                                                  |
-| -------- | ---------- | ------------------------------------------------------------------------------------------------------- |
-| 20210905 | 20210905.1 | The v2.1.2 release adds ability to opt out of diagnostics                                               |
-| 20210902 | 20210902.1 | The v2.1.1 release adds an ip_rules variable                                                            |
-| 20210831 | 20210831.1 | The v2.1.0 release updates kv workflow, naming, and examples                                            |
-| 20210701 | 20210701.1 | The v2.0.0 release prevents destruction of databases when one or more are added/removed from the list   |
-| 20210625 | 20210625.1 | The v1.1.1 release which passes tags to other resources and fixes subnet rule names                     |
-| 20210623 | 20210623.1 | The v1.1.0 release which add more configurable key-vault settings and easier changing to firewall/vnets |
-| 20210510 | 20210526.1 | The v1.0.2 release which adds custom SA threat detection policy                                         |
-| 20210510 | 20210510.1 | The v1.0.1 release which adds optional support for ATP                                                  |
-| 20210207 | 20210207.1 | The v1.0.0 release of Terraform module                                                                  |
+| Date     | Release | Change                                                                                       |
+| -------- | ------- | -------------------------------------------------------------------------------------------- |
+| 20210907 | v2.2.0  | Release moves the key vault into the module                                                  |
+| 20210905 | v2.1.2  | Release adds ability to opt out of diagnostics                                               |
+| 20210902 | v2.1.1  | Release adds an ip_rules variable                                                            |
+| 20210831 | v2.1.0  | Release updates kv workflow, naming, and examples                                            |
+| 20210701 | v2.0.0  | Release prevents destruction of databases when one or more are added/removed from the list   |
+| 20210625 | v1.1.1  | Release which passes tags to other resources and fixes subnet rule names                     |
+| 20210623 | v1.1.0  | Release which add more configurable key-vault settings and easier changing to firewall/vnets |
+| 20210510 | v1.0.2  | Release which adds custom SA threat detection policy                                         |
+| 20210510 | v1.0.1  | Release which adds optional support for ATP                                                  |
+| 20210207 | v1.0.0  | Release of Terraform module                                                                  |

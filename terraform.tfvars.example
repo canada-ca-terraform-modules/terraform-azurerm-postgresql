@@ -9,10 +9,15 @@ administrator_login_password = "pgsql1313"
 # active_directory_administrator_object_id = "XX-XXXX-XXXX-XXX-XXX"
 # active_directory_administrator_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
 
-kv_workflow_enable = false
-# kv_workflow_name             = "XXXXX"
-# kv_workflow_rg               = "XX-XXXX-XXXX-XXX-XXX"
-# kv_workflow_salogging_rg     = "XX-XXXX-XXXX-XXX-XXX"
+kv_db_enable    = false
+# kv_db_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
+# kv_db_name    = "XXXXX"
+# kv_db_rg      = "XX-XXXX-XXXX-XXX-XXX"
+
+kv_workflow_enable         = false
+# kv_workflow_name         = "XXXXX"
+# kv_workflow_rg           = "XX-XXXX-XXXX-XXX-XXX"
+# kv_workflow_salogging_rg = "XX-XXXX-XXXX-XXX-XXX"
 
 sku_name       = "GP_Gen5_4"
 pgsql_version  = "11"
@@ -37,7 +42,6 @@ subnet_address_prefixes = ["172.15.8.0/22"]
 public_network_access_enabled    = true
 ssl_enforcement_enabled          = true
 ssl_minimal_tls_version_enforced = "TLS1_2"
-key_vault_id                     = ""
 
 diagnostics = {
   destination   = ""

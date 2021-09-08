@@ -1,6 +1,18 @@
 locals {
+  kv_db_name = var.kv_db_name
+  kv_db_rg   = var.kv_db_rg
+
   kv_workflow_name = var.kv_workflow_name
   kv_workflow_rg   = var.kv_workflow_rg
+}
+
+data "azurerm_client_config" "current" {}
+
+data "azurerm_key_vault" "db" {
+  count = var.kv_db_enable ? 1 : 0
+
+  name                = local.kv_db_name
+  resource_group_name = local.kv_db_rg
 }
 
 data "azurerm_key_vault" "sqlhstkv" {

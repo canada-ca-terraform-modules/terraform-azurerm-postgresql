@@ -66,6 +66,25 @@ variable "key_vault_id" {
   default     = ""
 }
 
+variable "kv_db_enable" {
+  description = "(Optional) Enable Key Vault to be used for the Key Vault against the PostgreSQL instance."
+  default     = false
+}
+
+variable "kv_db_name" {
+  description = "(Optional) The Key Vault name to be used for the Key Vault against the PostgreSQL instance."
+  default     = ""
+}
+
+variable "kv_db_rg" {
+  description = "(Optional) The Key Vault resource group to be used for the Key Vault against the PostgreSQL instance."
+  default     = ""
+}
+
+variable "kv_db_tenant_id" {
+  description = "(Required) The Tenant ID to be used for the Key Vault against the PostgreSQL instance."
+}
+
 variable "kv_workflow_enable" {
   description = "(Optional) Enable Key Vault workflow for storage of passwords and pointer to logging storage account."
   default     = false
