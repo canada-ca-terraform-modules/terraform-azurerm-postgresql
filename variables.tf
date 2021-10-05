@@ -50,15 +50,15 @@ variable "firewall_rules" {
   description = "(Required) Specifies the Start IP Address associated with this Firewall Rule."
 }
 
-variable "key_type" {
-  description = "Type of key to create in the Key Vault."
-  default     = "RSA"
-}
-
 variable "key_size" {
   type        = number
   description = "Size of key to create in Key Vault."
   default     = 2048
+}
+
+variable "key_type" {
+  description = "Type of key to create in the Key Vault."
+  default     = "RSA"
 }
 
 variable "key_vault_id" {
@@ -66,42 +66,42 @@ variable "key_vault_id" {
   default     = ""
 }
 
-variable "kv_db_enable" {
-  description = "(Optional) Enable Key Vault to be used for the Key Vault against the PostgreSQL instance."
+variable "kv_create" {
+  description = "(Optional) If kv_create is set to `true` then enable creation of new key vault else `false` then point to an existing one."
   default     = false
 }
 
-variable "kv_db_name" {
-  description = "(Optional) The Key Vault name to be used for the Key Vault against the PostgreSQL instance."
+variable "kv_name" {
+  description = "(Optional) The name to be used for the Key Vault against the PostgreSQL instance."
   default     = ""
 }
 
-variable "kv_db_rg" {
-  description = "(Optional) The Key Vault resource group to be used for the Key Vault against the PostgreSQL instance."
+variable "kv_rg" {
+  description = "(Optional) The resource group to be used for the Key Vault against the PostgreSQL instance."
   default     = ""
 }
 
-variable "kv_db_tenant_id" {
+variable "kv_tenant_id" {
   description = "(Required) The Tenant ID to be used for the Key Vault against the PostgreSQL instance."
 }
 
 variable "kv_workflow_enable" {
-  description = "(Optional) Enable Key Vault workflow for storage of passwords and pointer to logging storage account."
+  description = "(Optional) If kv_workflow_enable is set to `true` then enable storing pointers to secrets in key vault else `false` then store as default."
   default     = false
 }
 
 variable "kv_workflow_name" {
-  description = "(Optional) The Key Vault name."
+  description = "(Optional) The name used for the Key Vault Workflow."
   default     = ""
 }
 
 variable "kv_workflow_rg" {
-  description = "(Optional) The Key Vault resource group."
+  description = "(Optional) The resource group used for the Key Vault Workflow."
   default     = ""
 }
 
 variable "kv_workflow_salogging_rg" {
-  description = "(Optional) The Key Vault storage account for logging resource group."
+  description = "(Optional) The storage account resource group used for the Key Vault Workflow."
   default     = ""
 }
 
@@ -159,20 +159,21 @@ variable "subnet_ids" {
 }
 
 variable "tags" {
-  type = map(string)
+  description = "A mapping of tags to assign to the resource."
+  type        = map(string)
   default = {
     environment : "dev"
   }
 }
 
 variable "vnet_cidr" {
-  description = "Virtual Network CIDR"
-  type        = list(string)
-  default     = ["172.15.0.0/16"]
+  description = "Virtual Network CIDR."
+  type        = string
+  default     = "172.15.0.0/16"
 }
 
-variable "vnet_enable" {
-  description = "(Optional) Enable Virtual Network logic."
+variable "vnet_create" {
+  description = "(Optional) If vnet_create is set to `true` then enable creation of new vnet else `false` then point to an existing one."
   default     = false
 }
 
@@ -187,13 +188,13 @@ variable "vnet_rg" {
 }
 
 variable "subnet_address_prefixes" {
-  description = "Virtual Network Address Prefixes"
+  description = "Virtual Network Address Prefixes."
   type        = list(string)
   default     = ["172.15.8.0/22"]
 }
 
-variable "subnet_enable" {
-  description = "(Optional) Enable Subnet logic."
+variable "subnet_create" {
+  description = "(Optional) If subnet_create is set to `true` then enable creation of new subnet else `false` then point to an existing one."
   default     = false
 }
 

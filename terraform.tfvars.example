@@ -9,10 +9,10 @@ administrator_login_password = "pgsql1313"
 # active_directory_administrator_object_id = "XX-XXXX-XXXX-XXX-XXX"
 # active_directory_administrator_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
 
-kv_db_enable    = false
-# kv_db_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
-# kv_db_name    = "XXXXX"
-# kv_db_rg      = "XX-XXXX-XXXX-XXX-XXX"
+kv_create    = false
+# kv_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
+# kv_name    = "XXXXX"
+# kv_rg      = "XX-XXXX-XXXX-XXX-XXX"
 
 kv_workflow_enable         = false
 # kv_workflow_name         = "XXXXX"
@@ -30,12 +30,12 @@ subnet_ids     = []
 ip_rules       = []
 firewall_rules = []
 
-vnet_enable = false
+vnet_create = false
 vnet_name   = "pgsql-vnet"
 vnet_cidr   = "172.15.0.0/16"
 vnet_rg     = "XX-XXXX-XXXX-XXX-XXX"
 
-subnet_enable           = false
+subnet_create           = false
 subnet_name             = "pgsql-subnet"
 subnet_address_prefixes = ["172.15.8.0/22"]
 

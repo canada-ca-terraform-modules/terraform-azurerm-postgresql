@@ -1,6 +1,6 @@
 resource "azurerm_key_vault_key" "pgsql" {
   name         = "${var.name}-tfex-key"
-  key_vault_id = var.kv_db_enable ? data.azurerm_key_vault.db[0].id : azurerm_key_vault.pgsql[0].id
+  key_vault_id = var.kv_create ? azurerm_key_vault.pgsql[0].id : data.azurerm_key_vault.db[0].id
   key_type     = var.key_type
   key_size     = var.key_size
   key_opts     = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
