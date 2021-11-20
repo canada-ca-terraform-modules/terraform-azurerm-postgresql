@@ -15,9 +15,9 @@ resource "azurerm_storage_account" "pgsql" {
   min_tls_version           = "TLS1_2"
 
   network_rules {
-    default_action             = "Deny"
+    default_action             = var.subnet_create == null ? "Allow" : "Deny"
     ip_rules                   = var.ip_rules
-    virtual_network_subnet_ids = [var.subnet_create ? azurerm_subnet.pgsql[0].id : data.azurerm_subnet.pgsql[0].id]
+    virtual_network_subnet_ids = var.subnet_create == null ? [] : [var.subnet_create ? azurerm_subnet.pgsql[0].id : data.azurerm_subnet.pgsql[0].id]
     bypass                     = ["AzureServices"]
   }
 

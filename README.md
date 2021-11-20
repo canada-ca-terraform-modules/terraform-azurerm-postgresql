@@ -69,13 +69,13 @@ Examples for this module along with various configurations can be found in the [
 | storagesize_mb                           | string           | `"640000"`          | no       | Specifies the version of PostgreSQL to use.                                                                                          |
 | subnet_ids                               | list             | n/a                 | yes      | The IDs of the subnets that the PostgreSQL server will be connected to.                                                              |
 | tags                                     | map              | `"<map>"`           | n/a      | A mapping of tags to assign to the resource.                                                                                         |
+| vnet_create                              | string           | `"false"`           | n/a      | Flag vnet_create can either be `null` (default), `true` (create vnet), or `false` (use existing vnet).                               |
 | vnet_cidr                                | string           | `172.15.0.0/16`     | n/a      | Virtual Network CIDR.                                                                                                                |
-| vnet_create                              | string           | `"false"`           | n/a      | If vnet_create is set to `true` then enable creation of new vnet else `false` then point to an existing one.                         |
-| vnet_name                                | string           | n/a                 | yes      | Name for your Virtual Network.                                                                                                       |
-| vnet_rg                                  | string           | `""`                | n/a      | The Virtual Network resource group.                                                                                                  |
+| vnet_name                                | string           | n/a                 | yes      | The vnet name to be used when vnet_create is either set to `true` or `false`.                                                        |
+| vnet_rg                                  | string           | `""`                | n/a      | The vnet resource group to be used when vnet_create is either set to `true` or `false`.                                              |
+| subnet_create                            | string           | `"false"`           | n/a      | Flag subnet_create can either be `null` (default), `true` (create vnet), or `false` (use existing vnet).                             |
 | subnet_address_prefixes                  | list             | `["172.15.8.0/22"]` | n/a      | Virtual Network Address Prefixes.                                                                                                    |
-| subnet_create                            | string           | `"false"`           | n/a      | If subnet_create is set to `true` then enable creation of new subnet else `false` then point to an existing one.                     |
-| subnet_name                              | string           | n/a`                | yes      | Name for your Subnet.                                                                                                                |
+| subnet_name                              | string           | `n/a`               | yes      | The subnet name to be used when subnet_create is either set to `true` or `false`.                                                    |
 
 ## Variables (PostgreSQL Configuration)
 

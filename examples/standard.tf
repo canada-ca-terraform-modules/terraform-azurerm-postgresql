@@ -51,22 +51,24 @@ module "postgresql_example" {
   firewall_rules = []
 
   #########################################################
-  # vnet_create
+  # vnet_create (used for storage account network rule)
+  # => ``null` then no vnet created or attached (default)
   # => ``true` then enable creation of new vnet
   # => ``false` then point to existing vnet
   #########################################################
-  vnet_create = false
+  # vnet_create = false
   # vnet_cidr   = "172.15.0.0/16"
-  vnet_name   = "psql-vnet"
-  vnet_rg     = "XX-XXXX-XXXX-XXX-XXX"
+  # vnet_name   = "psql-vnet"
+  # vnet_rg     = "XX-XXXX-XXXX-XXX-XXX"
 
   #########################################################
-  # subnet_create
+  # subnet_create (used for storage account network rule)
+  # => ``null` then no subnet created or attached (default)
   # => ``true` then enable creation of new subnet
   # => ``false` then point to existing subnet
   #########################################################
-  subnet_create = false
-  subnet_name   = "psql-subnet"
+  # subnet_create = false
+  # subnet_name   = "psql-subnet"
   # subnet_address_prefixes = ["172.15.8.0/22"]
 
   public_network_access_enabled    = true

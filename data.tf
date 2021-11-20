@@ -43,15 +43,29 @@ data "azurerm_storage_account" "saloggingname" {
   resource_group_name = var.kv_workflow_salogging_rg
 }
 
+#########################################################
+# vnet_create (used for storage account network rule)
+# => ``null` then no vnet created or attached (default)
+# => ``true` then enable creation of new vnet
+# => ``false` then point to existing vnet
+#########################################################
+
 data "azurerm_virtual_network" "pgsql" {
-  count = var.vnet_create ? 0 : 1
+  count = (var.vnet_create || var.vnet_create == null) ? 0 : 1
 
   name                = var.vnet_name
   resource_group_name = var.vnet_rg
 }
 
+#########################################################
+# subnet_create (used for storage account network rule)
+# => ``null` then no subnet created or attached (default)
+# => ``true` then enable creation of new subnet
+# => ``false` then point to existing subnet
+#########################################################
+
 data "azurerm_subnet" "pgsql" {
-  count = var.subnet_create ? 0 : 1
+  count = (var.subnet_create || var.subnet_create == null) ? 0 : 1
 
   name                 = var.subnet_name
   virtual_network_name = var.vnet_name

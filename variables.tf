@@ -155,7 +155,7 @@ variable "storagesize_mb" {
 
 variable "subnet_ids" {
   type        = list(string)
-  description = "(Required) The IDs of the subnet that the PostgreSQL server will be connected to"
+  description = "(Required) The IDs of the subnet that the PostgreSQL server will be connected to."
 }
 
 variable "tags" {
@@ -166,25 +166,45 @@ variable "tags" {
   }
 }
 
+#########################################################
+# vnet_create (used for storage account network rule)
+# => ``null` then no vnet created or attached (default)
+# => ``true` then enable creation of new vnet
+# => ``false` then point to existing vnet
+#########################################################
+
+variable "vnet_create" {
+  description = "(Optional) Flag vnet_create can either be `null` (default), `true` (create vnet), or `false` (use existing vnet)."
+  default     = null
+}
+
 variable "vnet_cidr" {
   description = "Virtual Network CIDR."
   type        = string
   default     = "172.15.0.0/16"
 }
 
-variable "vnet_create" {
-  description = "(Optional) If vnet_create is set to `true` then enable creation of new vnet else `false` then point to an existing one."
-  default     = false
-}
-
 variable "vnet_name" {
-  description = "(Optional) Name for your Virtual Network."
+  description = "(Optional) The vnet name to be used when vnet_create is either set to `true` or `false`."
   type        = string
+  default     = null
 }
 
 variable "vnet_rg" {
-  description = "(Optional) The Virtual Network resource group."
-  default     = ""
+  description = "(Optional) The vnet resource group to be used when vnet_create is either set to `true` or `false`."
+  default     = null
+}
+
+#########################################################
+# subnet_create (used for storage account network rule)
+# => ``null` then no subnet created or attached (default)
+# => ``true` then enable creation of new subnet
+# => ``false` then point to existing subnet
+#########################################################
+
+variable "subnet_create" {
+  description = "(Optional) Flag subnet_create can either be `null` (default), `true` (create vnet), or `false` (use existing vnet)."
+  default     = null
 }
 
 variable "subnet_address_prefixes" {
@@ -193,16 +213,11 @@ variable "subnet_address_prefixes" {
   default     = ["172.15.8.0/22"]
 }
 
-variable "subnet_create" {
-  description = "(Optional) If subnet_create is set to `true` then enable creation of new subnet else `false` then point to an existing one."
-  default     = false
-}
-
 variable "subnet_name" {
-  description = "(Optional) Name for your Subnet."
+  description = "(Optional) The subnet name to be used when subnet_create is either set to `true` or `false`."
   type        = string
+  default     = null
 }
-
 
 # Parameters
 
