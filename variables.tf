@@ -85,26 +85,6 @@ variable "kv_tenant_id" {
   description = "(Required) The Tenant ID to be used for the Key Vault against the PostgreSQL instance."
 }
 
-variable "kv_workflow_enable" {
-  description = "(Optional) If kv_workflow_enable is set to `true` then enable storing pointers to secrets in key vault else `false` then store as default."
-  default     = false
-}
-
-variable "kv_workflow_name" {
-  description = "(Optional) The name used for the Key Vault Workflow."
-  default     = ""
-}
-
-variable "kv_workflow_rg" {
-  description = "(Optional) The resource group used for the Key Vault Workflow."
-  default     = ""
-}
-
-variable "kv_workflow_salogging_rg" {
-  description = "(Optional) The storage account resource group used for the Key Vault Workflow."
-  default     = ""
-}
-
 variable "location" {
   description = "(Optional) Specifies the supported Azure location where the resource exists."
   default     = "canadacentral"
@@ -166,6 +146,42 @@ variable "tags" {
   }
 }
 
+######################################################################
+# kv_pointer_enable (pointers in key vault for secrets state)
+# => ``true` then state from key vault is used for creation
+# => ``false` then state from terraform is used for creation (default)
+######################################################################
+
+variable "kv_pointer_enable" {
+  description = "(Optional) Flag kv_pointer_enable can either be `true` (state from key vault), or `false` (state from terraform)."
+  default     = false
+}
+
+variable "kv_pointer_name" {
+  description = "(Optional) The key vault name to be used when kv_pointer_enable is set to `true`."
+  default     = null
+}
+
+variable "kv_pointer_rg" {
+  description = "(Optional) The key vault resource group to be used when kv_pointer_enable is set to `true`."
+  default     = null
+}
+
+variable "kv_pointer_logging_name" {
+  description = "(Optional) The logging name to be looked up in key vault when kv_pointer_enable is set to `true`."
+  default     = null
+}
+
+variable "kv_pointer_logging_rg" {
+  description = "(Optional) The logging resource group name to be used when kv_pointer_enable is set to `true`."
+  default     = null
+}
+
+variable "kv_pointer_sqladmin_password" {
+  description = "(Optional) The sqladmin password to be looked up in key vault when kv_pointer_enable is set to `true`."
+  default     = null
+}
+
 #########################################################
 # vnet_create (used for storage account network rule)
 # => ``null` then no vnet created or attached (default)
@@ -219,7 +235,9 @@ variable "subnet_name" {
   default     = null
 }
 
+#########################################################
 # Parameters
+#########################################################
 
 variable "client_min_messages" {
   description = "(Optional) Sets the message levels that are sent to the client."

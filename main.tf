@@ -13,7 +13,7 @@ resource "azurerm_postgresql_server" "pgsql" {
   resource_group_name = var.resource_group
 
   administrator_login          = var.administrator_login
-  administrator_login_password = length(data.azurerm_key_vault_secret.sqlhstsvc) > 0 ? data.azurerm_key_vault_secret.sqlhstsvc[0].value : var.administrator_login_password
+  administrator_login_password = (var.kv_pointer_enable && length(data.azurerm_key_vault_secret.pointer_sqladmin_password) > 0) ? data.azurerm_key_vault_secret.pointer_sqladmin_password[0].value : var.administrator_login_password
 
   sku_name   = var.sku_name
   version    = var.pgsql_version
@@ -35,8 +35,8 @@ resource "azurerm_postgresql_server" "pgsql" {
     email_addresses            = var.emails
     enabled                    = var.diagnostics != null
     retention_days             = var.retention_days
-    storage_endpoint           = var.kv_workflow_enable ? data.azurerm_storage_account.saloggingname[0].primary_blob_endpoint : azurerm_storage_account.pgsql[0].primary_blob_endpoint
-    storage_account_access_key = var.kv_workflow_enable ? data.azurerm_storage_account.saloggingname[0].primary_access_key : azurerm_storage_account.pgsql[0].primary_access_key
+    storage_endpoint           = var.kv_pointer_enable ? data.azurerm_storage_account.pointer_logging_name[0].primary_blob_endpoint : azurerm_storage_account.pgsql[0].primary_blob_endpoint
+    storage_account_access_key = var.kv_pointer_enable ? data.azurerm_storage_account.pointer_logging_name[0].primary_access_key : azurerm_storage_account.pgsql[0].primary_access_key
   }
 
   identity {
@@ -73,10 +73,10 @@ resource "azurerm_postgresql_active_directory_administrator" "pgsql" {
   object_id           = var.active_directory_administrator_tenant_id
 }
 
-// Configure Server Logs
-//
-// https://docs.microsoft.com/en-us/azure/postgresql/howto-configure-server-logs-in-portal
-//
+#########################################################################################
+# Configure Server Logs
+# https://docs.microsoft.com/en-us/azure/postgresql/howto-configure-server-logs-in-portal
+#########################################################################################
 
 resource "azurerm_postgresql_configuration" "client_min_messages" {
   name                = "client_min_messages"
@@ -190,8 +190,9 @@ resource "azurerm_postgresql_configuration" "log_statement" {
   value               = var.log_statement
 }
 
-// Configure Security
-//
+#########################################################################################
+# Configure Security
+#########################################################################################
 
 resource "azurerm_postgresql_configuration" "row_security" {
   name                = "row_security"
@@ -200,8 +201,9 @@ resource "azurerm_postgresql_configuration" "row_security" {
   value               = var.row_security
 }
 
-// Configure Performance
-//
+#########################################################################################
+# Configure Performance
+#########################################################################################
 
 resource "azurerm_postgresql_configuration" "checkpoint_warning" {
   name                = "checkpoint_warning"
@@ -308,8 +310,9 @@ resource "azurerm_postgresql_configuration" "work_mem" {
   value               = var.work_mem
 }
 
-// Configure Networking
-//
+#########################################################################################
+# Configure Networking
+#########################################################################################
 
 resource "azurerm_postgresql_firewall_rule" "pgsql" {
   for_each            = toset(var.firewall_rules)

@@ -1,46 +1,44 @@
-locals {
-  kv_name = var.kv_name
-  kv_rg   = var.kv_rg
-
-  kv_workflow_name = var.kv_workflow_name
-  kv_workflow_rg   = var.kv_workflow_rg
-}
-
 data "azurerm_client_config" "current" {}
 
 data "azurerm_key_vault" "db" {
   count = var.kv_create ? 0 : 1
 
-  name                = local.kv_name
-  resource_group_name = local.kv_rg
+  name                = var.kv_name
+  resource_group_name = var.kv_rg
 }
 
-data "azurerm_key_vault" "sqlhstkv" {
-  count = (var.diagnostics != null) && var.kv_workflow_enable ? 1 : 0
+######################################################################
+# kv_pointer_enable (pointers in key vault for secrets state)
+# => ``true` then state from key vault is used for creation
+# => ``false` then state from terraform is used for creation (default)
+######################################################################
 
-  name                = local.kv_workflow_name
-  resource_group_name = local.kv_workflow_rg
+data "azurerm_key_vault" "pointer" {
+  count = var.kv_pointer_enable ? 1 : 0
+
+  name                = var.kv_pointer_name
+  resource_group_name = var.kv_pointer_rg
 }
 
-data "azurerm_key_vault_secret" "sqlhstsvc" {
-  count = (var.diagnostics != null) && var.kv_workflow_enable ? 1 : 0
+data "azurerm_key_vault_secret" "pointer_sqladmin_password" {
+  count = var.kv_pointer_enable ? 1 : 0
 
-  name         = "sqlhstsvc"
-  key_vault_id = data.azurerm_key_vault.sqlhstkv[count.index].id
+  name         = var.kv_pointer_sqladmin_password
+  key_vault_id = data.azurerm_key_vault.pointer[count.index].id
 }
 
-data "azurerm_key_vault_secret" "saloggingname" {
-  count = (var.diagnostics != null) && var.kv_workflow_enable ? 1 : 0
+data "azurerm_key_vault_secret" "pointer_logging_name" {
+  count = var.kv_pointer_enable ? 1 : 0
 
-  name         = "saloggingname"
-  key_vault_id = data.azurerm_key_vault.sqlhstkv[count.index].id
+  name         = var.kv_pointer_logging_name
+  key_vault_id = data.azurerm_key_vault.pointer[count.index].id
 }
 
-data "azurerm_storage_account" "saloggingname" {
-  count = (var.diagnostics != null) && var.kv_workflow_enable ? 1 : 0
+data "azurerm_storage_account" "pointer_logging_name" {
+  count = var.kv_pointer_enable ? 1 : 0
 
-  name                = data.azurerm_key_vault_secret.saloggingname[count.index].value
-  resource_group_name = var.kv_workflow_salogging_rg
+  name                = data.azurerm_key_vault_secret.pointer_logging_name[count.index].value
+  resource_group_name = var.kv_pointer_logging_rg
 }
 
 #########################################################

@@ -1,11 +1,3 @@
-locals {
-  pgsql_diag = {
-    storage_account_id = var.kv_workflow_enable ? data.azurerm_storage_account.saloggingname[0].id : azurerm_storage_account.pgsql[0].id
-    metric             = ["all"]
-    log                = ["all"]
-  }
-}
-
 resource "azurerm_key_vault" "pgsql" {
   count = var.kv_create ? 1 : 0
 
@@ -16,7 +8,6 @@ resource "azurerm_key_vault" "pgsql" {
   tenant_id                   = var.kv_tenant_id
   soft_delete_retention_days  = 90
   purge_protection_enabled    = true
-  soft_delete_enabled         = true
 
   sku_name = "standard"
 
@@ -77,47 +68,5 @@ resource "azurerm_key_vault" "pgsql" {
 
   lifecycle {
     ignore_changes = [tags]
-  }
-}
-
-data "azurerm_monitor_diagnostic_categories" "pgsql_diag_cat" {
-  count = var.kv_create ? 1 : 0
-
-  resource_id = azurerm_key_vault.pgsql[0].id
-}
-
-resource "azurerm_monitor_diagnostic_setting" "pgsql_diag_setting" {
-  count = var.kv_create ? 1 : 0
-
-  name               = "${var.name}-keyvault-diag"
-  target_resource_id = azurerm_key_vault.pgsql[0].id
-  storage_account_id = local.pgsql_diag.storage_account_id
-
-  dynamic "log" {
-    for_each = data.azurerm_monitor_diagnostic_categories.pgsql_diag_cat[0].logs
-
-    content {
-      category = log.value
-      enabled  = contains(local.pgsql_diag.log, "all") || contains(local.pgsql_diag.log, log.value)
-
-      retention_policy {
-        enabled = true
-        days    = 90
-      }
-    }
-  }
-
-  dynamic "metric" {
-    for_each = data.azurerm_monitor_diagnostic_categories.pgsql_diag_cat[0].metrics
-
-    content {
-      category = metric.value
-      enabled  = contains(local.pgsql_diag.metric, "all") || contains(local.pgsql_diag.metric, metric.value)
-
-      retention_policy {
-        enabled = true
-        days    = 90
-      }
-    }
   }
 }
