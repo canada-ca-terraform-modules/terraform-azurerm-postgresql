@@ -9,10 +9,10 @@ administrator_login_password = "pgsql1313"
 # active_directory_administrator_object_id = "XX-XXXX-XXXX-XXX-XXX"
 # active_directory_administrator_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
 
-kv_create    = false
-# kv_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
-# kv_name    = "XXXXX"
-# kv_rg      = "XX-XXXX-XXXX-XXX-XXX"
+kv_db_create    = false
+# kv_db_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
+# kv_db_name    = "XXXXX"
+# kv_db_rg      = "XX-XXXX-XXXX-XXX-XXX"
 
 kv_pointer_logging         = false
 # kv_pointer_name         = "XXXXX"

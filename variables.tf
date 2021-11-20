@@ -50,41 +50,6 @@ variable "firewall_rules" {
   description = "(Required) Specifies the Start IP Address associated with this Firewall Rule."
 }
 
-variable "key_size" {
-  type        = number
-  description = "Size of key to create in Key Vault."
-  default     = 2048
-}
-
-variable "key_type" {
-  description = "Type of key to create in the Key Vault."
-  default     = "RSA"
-}
-
-variable "key_vault_id" {
-  description = "(Optional) The Key Vault id for the Customer Managed Key."
-  default     = ""
-}
-
-variable "kv_create" {
-  description = "(Optional) If kv_create is set to `true` then enable creation of new key vault else `false` then point to an existing one."
-  default     = false
-}
-
-variable "kv_name" {
-  description = "(Optional) The name to be used for the Key Vault against the PostgreSQL instance."
-  default     = ""
-}
-
-variable "kv_rg" {
-  description = "(Optional) The resource group to be used for the Key Vault against the PostgreSQL instance."
-  default     = ""
-}
-
-variable "kv_tenant_id" {
-  description = "(Required) The Tenant ID to be used for the Key Vault against the PostgreSQL instance."
-}
-
 variable "location" {
   description = "(Optional) Specifies the supported Azure location where the resource exists."
   default     = "canadacentral"
@@ -144,6 +109,44 @@ variable "tags" {
   default = {
     environment : "dev"
   }
+}
+
+############################################################
+# kv_db_create (used for customer managed key)
+# => ``null` then no key vault created or attached (default)
+# => ``true` then enable creation of new key vault
+# => ``false` then point to existing key vault
+############################################################
+
+variable "kv_db_create" {
+  description = "(Optional) Flag kv_db_create can either be `null` (default), `true` (create key vault), or `false` (use existing key vault)."
+  default     = null
+}
+
+variable "kv_db_name" {
+  description = "(Optional) The key vault name to be used when kv_db_create is either set to `true` or `false`."
+  default     = null
+}
+
+variable "kv_db_rg" {
+  description = "(Optional) The key vault resource group to be used when kv_db_create is either set to `true` or `false`."
+  default     = null
+}
+
+variable "kv_db_tenant_id" {
+  description = "(Optional) The key vault tenant id to be used when kv_db_create is either set to `true` or `false`."
+  default     = null
+}
+
+variable "kv_db_key_size" {
+  description = "(Optional) The key vault size to be used when kv_db_create is either set to `true` or `false`."
+  type        = number
+  default     = 2048
+}
+
+variable "kv_db_key_type" {
+  description = "(Optional) The key vault type to be used when kv_db_create is either set to `true` or `false`."
+  default     = "RSA"
 }
 
 ######################################################################

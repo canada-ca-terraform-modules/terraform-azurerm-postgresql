@@ -1,10 +1,17 @@
 data "azurerm_client_config" "current" {}
 
-data "azurerm_key_vault" "db" {
-  count = var.kv_create ? 0 : 1
+############################################################
+# kv_db_create (used for customer managed key)
+# => ``null` then no key vault created or attached (default)
+# => ``true` then enable creation of new key vault
+# => ``false` then point to existing key vault
+############################################################
 
-  name                = var.kv_name
-  resource_group_name = var.kv_rg
+data "azurerm_key_vault" "db" {
+  count = (var.kv_db_create || var.kv_db_create == null) ? 0 : 1
+
+  name                = var.kv_db_name
+  resource_group_name = var.kv_db_rg
 }
 
 ######################################################################

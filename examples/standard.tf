@@ -48,22 +48,25 @@ module "postgresql_example" {
     "tier" = "k8s"
   }
 
-  #########################################################
-  # kv_create
-  # => `true` then enable creation of new key vault
-  # => `false` then point to existing key vault
-  #########################################################
-  kv_create       = true
-  kv_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
-  kv_name      = "psql-keyvault"
-  kv_rg        = "XX-XXXX-XXXX-XXX-XXX"
+  ############################################################
+  # kv_db_create (used for customer managed key)
+  # => ``null` then no key vault created or attached (default)
+  # => ``true` then enable creation of new key vault
+  # => ``false` then point to existing key vault
+  ############################################################
+  # kv_db_create    = true
+  # kv_db_name      = "kvdbname"
+  # kv_db_rg        = "kvdvrg"
+  # kv_db_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
+  # kv_db_key_size  = 2048
+  # kv_db_key_type  = "RSA"
 
   ######################################################################
-# kv_pointer_enable (pointers in key vault for secrets state)
+  # kv_pointer_enable (pointers in key vault for secrets state)
   # => ``true` then state from key vault is used for creation
   # => ``false` then state from terraform is used for creation (default)
   ######################################################################
-  # kv_pointer_enable = false
+  # kv_pointer_enable            = false
   # kv_pointer_name              = "kvpointername"
   # kv_pointer_rg                = "kvpointerrg"
   # kv_pointer_logging_name      = "saloggingname"

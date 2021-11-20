@@ -1,8 +1,10 @@
 resource "azurerm_key_vault_key" "pgsql" {
+  count = (var.kv_db_create != null) ? 1 : 0
+
   name         = "${var.name}-tfex-key"
-  key_vault_id = var.kv_create ? azurerm_key_vault.pgsql[0].id : data.azurerm_key_vault.db[0].id
-  key_type     = var.key_type
-  key_size     = var.key_size
+  key_vault_id = var.kv_db_create ? azurerm_key_vault.pgsql[0].id : data.azurerm_key_vault.db[0].id
+  key_type     = var.kv_db_key_type
+  key_size     = var.kv_db_key_size
   key_opts     = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
   tags         = var.tags
 }
@@ -52,8 +54,10 @@ resource "azurerm_postgresql_server" "pgsql" {
 }
 
 resource "azurerm_postgresql_server_key" "pgsql" {
+  count = (var.kv_db_create != null) ? 1 : 0
+
   server_id        = azurerm_postgresql_server.pgsql.id
-  key_vault_key_id = azurerm_key_vault_key.pgsql.id
+  key_vault_key_id = azurerm_key_vault_key.pgsql[0].id
 }
 
 resource "azurerm_postgresql_database" "pgsql" {

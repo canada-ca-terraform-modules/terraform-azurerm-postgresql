@@ -1,11 +1,11 @@
 resource "azurerm_key_vault" "pgsql" {
-  count = var.kv_create ? 1 : 0
+  count = (var.kv_db_create || var.kv_db_create != null) ? 1 : 0
 
-  name                        = var.kv_name
+  name                        = var.kv_db_name
   location                    = var.location
-  resource_group_name         = var.kv_rg
+  resource_group_name         = var.kv_db_rg
   enabled_for_disk_encryption = true
-  tenant_id                   = var.kv_tenant_id
+  tenant_id                   = var.kv_db_tenant_id
   soft_delete_retention_days  = 90
   purge_protection_enabled    = true
 
@@ -35,7 +35,7 @@ resource "azurerm_key_vault" "pgsql" {
   }
 
   access_policy {
-    tenant_id = var.kv_tenant_id
+    tenant_id = var.kv_db_tenant_id
     object_id = data.azurerm_client_config.current.object_id
 
     key_permissions = [
@@ -58,10 +58,10 @@ resource "azurerm_key_vault" "pgsql" {
   }
 
   network_acls {
-    default_action             = "Deny"
+    default_action             = var.subnet_create == null ? "Allow" : "Deny"
     bypass                     = "AzureServices"
     ip_rules                   = var.ip_rules
-    virtual_network_subnet_ids = [var.subnet_create ? azurerm_subnet.pgsql[0].id : data.azurerm_subnet.pgsql[0].id]
+    virtual_network_subnet_ids = var.subnet_create == null ? [] : [var.subnet_create ? azurerm_subnet.pgsql[0].id : data.azurerm_subnet.pgsql[0].id]
   }
 
   tags = var.tags

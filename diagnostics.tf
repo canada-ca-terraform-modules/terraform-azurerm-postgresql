@@ -1,7 +1,7 @@
 locals {
-  diag_resource_list = var.diagnostics != null ? split("/", var.diagnostics.destination) : []
+  diag_resource_list = (var.diagnostics != null) ? split("/", var.diagnostics.destination) : []
 
-  parsed_diag = var.diagnostics != null ? {
+  parsed_diag = (var.diagnostics != null) ? {
     log_analytics_id   = contains(local.diag_resource_list, "Microsoft.OperationalInsights") ? var.diagnostics.destination : null
     storage_account_id = contains(local.diag_resource_list, "Microsoft.Storage") ? var.diagnostics.destination : (var.kv_pointer_enable ? data.azurerm_storage_account.pointer_logging_name[0].id : azurerm_storage_account.pgsql[0].id)
     event_hub_auth_id  = contains(local.diag_resource_list, "Microsoft.EventHub") ? var.diagnostics.destination : null
@@ -17,13 +17,13 @@ locals {
 }
 
 data "azurerm_monitor_diagnostic_categories" "postgresql_server" {
-  count = var.diagnostics != null ? 1 : 0
+  count = (var.diagnostics != null) ? 1 : 0
 
   resource_id = azurerm_postgresql_server.pgsql.id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "postgresql_server" {
-  count = var.diagnostics != null ? 1 : 0
+  count = (var.diagnostics != null) ? 1 : 0
 
   name                           = "${var.name}-pgsql-diag"
   target_resource_id             = azurerm_postgresql_server.pgsql.id
@@ -62,16 +62,16 @@ resource "azurerm_monitor_diagnostic_setting" "postgresql_server" {
 }
 
 data "azurerm_monitor_diagnostic_categories" "key_vault" {
-  count = (var.diagnostics != null && var.kv_create) ? 1 : 0
+  count = (var.diagnostics != null && (var.kv_db_create != null)) ? 1 : 0
 
-  resource_id = azurerm_key_vault.pgsql[0].id
+  resource_id = var.kv_db_create ? azurerm_key_vault.pgsql[0].id : data.azurerm_key_vault.db[0].id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "key_vault" {
-  count = (var.diagnostics != null && var.kv_create) ? 1 : 0
+  count = (var.diagnostics != null && (var.kv_db_create != null)) ? 1 : 0
 
   name                           = "${var.name}-keyvault-diag"
-  target_resource_id             = azurerm_key_vault.pgsql[0].id
+  target_resource_id             = var.kv_db_create ? azurerm_key_vault.pgsql[0].id : data.azurerm_key_vault.db[0].id
   log_analytics_workspace_id     = local.parsed_diag.log_analytics_id
   eventhub_authorization_rule_id = local.parsed_diag.event_hub_auth_id
   eventhub_name                  = local.parsed_diag.event_hub_auth_id != null ? var.diagnostics.eventhub_name : null
