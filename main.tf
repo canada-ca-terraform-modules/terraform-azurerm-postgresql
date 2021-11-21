@@ -73,8 +73,8 @@ resource "azurerm_postgresql_active_directory_administrator" "pgsql" {
   server_name         = azurerm_postgresql_server.pgsql.name
   resource_group_name = var.resource_group
   login               = "sqladmin"
-  tenant_id           = var.active_directory_administrator_object_id
-  object_id           = var.active_directory_administrator_tenant_id
+  tenant_id           = var.active_directory_administrator_tenant_id
+  object_id           = var.active_directory_administrator_object_id
 }
 
 #########################################################################################
