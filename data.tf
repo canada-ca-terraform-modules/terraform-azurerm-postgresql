@@ -8,7 +8,7 @@ data "azurerm_client_config" "current" {}
 ############################################################
 
 data "azurerm_key_vault" "db" {
-  count = (var.kv_db_create || var.kv_db_create == null) ? 0 : 1
+  count = (var.kv_db_create == false) ? 1 : 0
 
   name                = var.kv_db_name
   resource_group_name = var.kv_db_rg
@@ -56,21 +56,14 @@ data "azurerm_storage_account" "pointer_logging_name" {
 #########################################################
 
 data "azurerm_virtual_network" "pgsql" {
-  count = (var.vnet_create || var.vnet_create == null) ? 0 : 1
+  count = (var.vnet_create == false) ? 1 : 0
 
   name                = var.vnet_name
   resource_group_name = var.vnet_rg
 }
 
-#########################################################
-# subnet_create (used for storage account network rule)
-# => ``null` then no subnet created or attached (default)
-# => ``true` then enable creation of new subnet
-# => ``false` then point to existing subnet
-#########################################################
-
 data "azurerm_subnet" "pgsql" {
-  count = (var.subnet_create || var.subnet_create == null) ? 0 : 1
+  count = (var.vnet_create == false) ? 1 : 0
 
   name                 = var.subnet_name
   virtual_network_name = var.vnet_name

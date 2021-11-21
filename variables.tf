@@ -214,15 +214,9 @@ variable "vnet_rg" {
   default     = null
 }
 
-#########################################################
-# subnet_create (used for storage account network rule)
-# => ``null` then no subnet created or attached (default)
-# => ``true` then enable creation of new subnet
-# => ``false` then point to existing subnet
-#########################################################
-
-variable "subnet_create" {
-  description = "(Optional) Flag subnet_create can either be `null` (default), `true` (create vnet), or `false` (use existing vnet)."
+variable "subnet_name" {
+  description = "(Optional) The subnet name to be used when vnet_create is either set to `true` or `false`."
+  type        = string
   default     = null
 }
 
@@ -230,12 +224,6 @@ variable "subnet_address_prefixes" {
   description = "Virtual Network Address Prefixes."
   type        = list(string)
   default     = ["172.15.8.0/22"]
-}
-
-variable "subnet_name" {
-  description = "(Optional) The subnet name to be used when subnet_create is either set to `true` or `false`."
-  type        = string
-  default     = null
 }
 
 #########################################################

@@ -6,7 +6,7 @@
 #########################################################
 
 resource "azurerm_virtual_network" "pgsql" {
-  count = var.vnet_create ? 1 : 0
+  count = (var.vnet_create == true) ? 1 : 0
 
   name                = var.vnet_name
   location            = var.vnet_rg
@@ -14,17 +14,10 @@ resource "azurerm_virtual_network" "pgsql" {
   address_space       = [var.vnet_cidr]
 }
 
-#########################################################
-# subnet_create (used for storage account network rule)
-# => ``null` then no subnet created or attached (default)
-# => ``true` then enable creation of new subnet
-# => ``false` then point to existing subnet
-#########################################################
-
 resource "azurerm_subnet" "pgsql" {
-  count = var.subnet_create ? 1 : 0
+  count = (var.vnet_create == true) ? 1 : 0
 
-  name                 = var.vnet_name
+  name                 = var.subnet_name
   resource_group_name  = var.vnet_rg
   virtual_network_name = var.vnet_create ? azurerm_virtual_network.pgsql[0].name : data.azurerm_virtual_network.pgsql[0].name
   address_prefixes     = var.subnet_address_prefixes

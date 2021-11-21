@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "pgsql" {
-  count = (var.kv_db_create || var.kv_db_create != null) ? 1 : 0
+  count = (var.kv_db_create == true) ? 1 : 0
 
   name                        = var.kv_db_name
   location                    = var.location
@@ -58,10 +58,10 @@ resource "azurerm_key_vault" "pgsql" {
   }
 
   network_acls {
-    default_action             = var.subnet_create == null ? "Allow" : "Deny"
+    default_action             = var.vnet_create == null ? "Allow" : "Deny"
     bypass                     = "AzureServices"
     ip_rules                   = var.ip_rules
-    virtual_network_subnet_ids = var.subnet_create == null ? [] : [var.subnet_create ? azurerm_subnet.pgsql[0].id : data.azurerm_subnet.pgsql[0].id]
+    virtual_network_subnet_ids = var.vnet_create == null ? [] : [var.vnet_create ? azurerm_subnet.pgsql[0].id : data.azurerm_subnet.pgsql[0].id]
   }
 
   tags = var.tags

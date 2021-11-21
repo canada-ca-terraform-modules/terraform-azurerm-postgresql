@@ -83,14 +83,6 @@ module "postgresql_example" {
   # vnet_cidr   = "172.15.0.0/16"
   # vnet_name   = "psql-vnet"
   # vnet_rg     = "XX-XXXX-XXXX-XXX-XXX"
-
-  #########################################################
-  # subnet_create (used for storage account network rule)
-  # => ``null` then no subnet created or attached (default)
-  # => ``true` then enable creation of new subnet
-  # => ``false` then point to existing subnet
-  #########################################################
-  # subnet_create = false
   # subnet_name   = "psql-subnet"
   # subnet_address_prefixes = ["172.15.8.0/22"]
 }

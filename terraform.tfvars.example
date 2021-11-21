@@ -9,16 +9,6 @@ administrator_login_password = "pgsql1313"
 # active_directory_administrator_object_id = "XX-XXXX-XXXX-XXX-XXX"
 # active_directory_administrator_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
 
-kv_db_create    = false
-# kv_db_tenant_id = "XX-XXXX-XXXX-XXX-XXX"
-# kv_db_name    = "XXXXX"
-# kv_db_rg      = "XX-XXXX-XXXX-XXX-XXX"
-
-kv_pointer_logging         = false
-# kv_pointer_name         = "XXXXX"
-# kv_pointer_rg           = "XX-XXXX-XXXX-XXX-XXX"
-# kv_pointer_logging_rg = "XX-XXXX-XXXX-XXX-XXX"
-
 sku_name       = "GP_Gen5_4"
 pgsql_version  = "11"
 storagesize_mb = 256000
@@ -30,22 +20,6 @@ subnet_ids     = []
 ip_rules       = []
 firewall_rules = []
 
-vnet_create = false
-vnet_name   = "pgsql-vnet"
-vnet_cidr   = "172.15.0.0/16"
-vnet_rg     = "XX-XXXX-XXXX-XXX-XXX"
-
-subnet_create           = false
-subnet_name             = "pgsql-subnet"
-subnet_address_prefixes = ["172.15.8.0/22"]
-
 public_network_access_enabled    = true
 ssl_enforcement_enabled          = true
 ssl_minimal_tls_version_enforced = "TLS1_2"
-
-diagnostics = {
-  destination   = ""
-  eventhub_name = ""
-  logs          = ["all"]
-  metrics       = ["all"]
-}
