@@ -123,6 +123,7 @@ Examples for this module along with various configurations can be found in the [
 
 | Date     | Release | Change                                                                                       |
 | -------- | ------- | -------------------------------------------------------------------------------------------- |
+| 20211121 | v4.0.0  | Final refactor with sane defaults and optional advanced logic                                |
 | 20211004 | v3.0.0  | Release makes clear some of the more advanced logic                                          |
 | 20210907 | v2.2.0  | Release moves the key vault into the module                                                  |
 | 20210905 | v2.1.2  | Release adds ability to opt out of diagnostics                                               |

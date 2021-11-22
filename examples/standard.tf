@@ -3,7 +3,7 @@ provider "azurerm" {
 }
 
 module "postgresql_example" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-azurerm-postgresql.git?ref=v3.0.0"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-azurerm-postgresql.git?ref=v4.0.0"
 
   name = "psqlservername"
   databases = {
