@@ -93,6 +93,11 @@ variable "ssl_minimal_tls_version_enforced" {
   default     = "TLS1_2"
 }
 
+variable "storage_account_name" {
+  description = "Name of the storage account for diagnostics (optional, if not provided the name is auto-generated)"
+  default     = null
+}
+
 variable "storagesize_mb" {
   description = "(Required) Specifies the version of PostgreSQL to use."
   default     = 640000
