@@ -96,7 +96,7 @@ resource "azurerm_monitor_diagnostic_setting" "key_vault" {
 
     content {
       category = metric.value
-      enabled  = contains(local.parsed_diag.log, "all") || contains(local.parsed_diag.log, log.value)
+      enabled  = contains(local.parsed_diag.metric, "all") || contains(local.parsed_diag.metric, metric.value)
 
       retention_policy {
         enabled = true
