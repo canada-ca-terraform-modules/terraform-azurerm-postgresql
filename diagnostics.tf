@@ -62,13 +62,13 @@ resource "azurerm_monitor_diagnostic_setting" "postgresql_server" {
 }
 
 data "azurerm_monitor_diagnostic_categories" "key_vault" {
-  count = (var.diagnostics != null && (var.kv_db_create != null)) ? 1 : 0
+  count = (var.diagnostics != null && (var.kv_db_create != null && var.kv_db_create == true)) ? 1 : 0
 
   resource_id = var.kv_db_create ? azurerm_key_vault.pgsql[0].id : data.azurerm_key_vault.db[0].id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "key_vault" {
-  count = (var.diagnostics != null && (var.kv_db_create != null)) ? 1 : 0
+  count = (var.diagnostics != null && (var.kv_db_create != null && var.kv_db_create == true)) ? 1 : 0
 
   name                           = "${var.name}-keyvault-diag"
   target_resource_id             = var.kv_db_create ? azurerm_key_vault.pgsql[0].id : data.azurerm_key_vault.db[0].id
